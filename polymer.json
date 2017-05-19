@@ -1,6 +1,6 @@
 {
     "entrypoint": "index.html",
-    "shell": "src/ft-connect-demo.html",
+    "shell": "src/ft-partner-application.html",
     "fragments": [
     ],
     "sourceGlobs": [

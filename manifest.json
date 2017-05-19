@@ -1,7 +1,7 @@
 {
-  "name": "ft-connect-demo",
-  "short_name": "ft-connect-demo",
-  "description": "A demo of the drop-in FileThis Connect element.",
+  "name": "ft-partner-application",
+  "short_name": "ft-partner-application",
+  "description": "A drop-in integration with FileThis partner services.",
   "start_url": "/",
   "display": "standalone"
 }

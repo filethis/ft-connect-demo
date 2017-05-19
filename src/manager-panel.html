@@ -1,0 +1,222 @@
+<!--
+Copyright 2017 FileThis, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+
+<link rel="import" href="../bower_components/ft-test-account-manager/ft-test-account-manager.html">
+<link rel="import" href="../bower_components/ft-connect/ft-connect.html">
+
+
+<dom-module id="manager-panel">
+
+    <style include="iron-flex iron-flex-alignment"></style>
+
+    <template>
+
+        <!-- Manager panel -->
+        <div class="layout vertical end"
+                    style="height:100%; border-right:1px solid #DDD; padding-right:1px;">
+
+            <!-- Manager panel Tabs and show/hide arrow button-->
+            <div class="layout horizontal center"
+                 style="width:100%">
+
+                <!-- Manager panel Tabs -->
+                <iron-collapse
+                        id="collapse"
+                        horizontal="true"
+                        opened="{{_managerIsOpen}}">
+                    <paper-tabs
+                            id="managerPanelTabs"
+                            selected="{{_selectedManagerPanelTabIndex}}"
+                            hidden$="[[!_managerIsOpen]]"
+                            style="font-size:16pt;">
+                        <paper-tab id="ccc">Start</paper-tab>
+                        <paper-tab id="ccc">Config</paper-tab>
+                        <paper-tab id="bbb">Styling</paper-tab>
+                        <paper-tab id="aaa">Ticket</paper-tab>
+                    </paper-tabs>
+                </iron-collapse>
+
+                <div class="flex"></div>
+
+                <!-- Show/hide arrow button -->
+                <paper-icon-button
+                        icon="[[_calculateManagerIcon(_managerIsOpen)]]"
+                        on-click="_onToggleButtonClicked">
+                </paper-icon-button>
+            </div>
+
+            <!-- Collapsing panel -->
+            <iron-collapse
+                    id="collapse"
+                    horizontal="true"
+                    opened="{{_managerIsOpen}}">
+
+                <!-- Manager panels -->
+                <iron-pages id="panels"
+                            style="width:100%; height:100%;"
+                            selected="{{_selectedManagerPanelTabIndex}}">
+
+                    <!-- Start manager panel -->
+                    <div>
+                        Start
+                    </div>
+
+                    <!-- Config manager panel -->
+                    <div>
+                        Config
+                    </div>
+
+                    <!-- Styling manager panel -->
+                    <div>
+                        Styling
+                    </div>
+
+                    <!-- Test account manager panel -->
+                    <div class="layout vertical center" style="width:100%; padding-top:16px">
+
+                        <!-- Test account manager -->
+                        <ft-test-account-manager
+                                id="testAccountManager"
+                                server="{{server}}"
+                                userAccountId="{{userAccountId}}"
+                                ticket="{{ticket}}">
+                        </ft-test-account-manager>
+
+                        <div style="height:16px"></div>
+
+                        <!-- Inject button -->
+                        <paper-button raised
+                                      style="font-family:Arial"
+                                      on-click="_onConnectButtonClicked">
+                            Inject Ticket
+                        </paper-button>
+                    </div>
+
+                </iron-pages>
+
+
+            </iron-collapse>
+
+        </div>
+
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'manager-panel',
+
+            properties:
+            {
+                /** The "base" URL for requests. For example: "https://filethis.com". Note that you should not use a trailing slash. */
+                server:
+                {
+                    type: String,
+                    notify: true,
+                    value: "",
+                    observer: "_onServerChanged"
+                },
+//                server:
+//                {
+//                    type: String,
+//                    notify: true,
+//                    value: "https://filethis.com"
+//                },
+
+                /** The user's FileThis account id. */
+                userAccountId: {
+                    type: String,
+                    notify: true,
+                    value: "",
+                    observer: "_onUserAccountIdChanged"
+                },
+
+                /** The end-user FileThis ticket. Used to authenticate and authorize requests to the FileThis API endpoints. */
+                ticket:
+                {
+                    type: String,
+                    notify: true,
+                    value: "",
+                    observer: "_onTicketChanged"
+                },
+
+                _managerIsOpen:
+                {
+                    type: Boolean,
+                    notify: true,
+                    value: "true"
+                },
+
+                _selectedManagerPanelTabIndex:
+                {
+                    type: Number,
+                    notify: true,
+                    value: "3"
+                }
+            },
+
+            _onServerChanged: function()
+            {
+                var theServer = this.server;
+            },
+
+            _onUserAccountIdChanged: function()
+            {
+                var theUserAccountId = this.userAccountId;
+            },
+
+            _onTicketChanged: function()
+            {
+                var theTicket = this.ticket;
+            },
+
+
+
+            _calculateManagerIcon: function(isOpen)
+            {
+                if (isOpen)
+                    return "arrow-back";
+                else
+                    return "arrow-forward";
+            },
+
+
+            // User action event handling --------------------------------------------------------------------------
+
+            _onToggleButtonClicked: function(event, detail)
+            {
+                this._managerIsOpen = !this._managerIsOpen;
+            }
+
+        })
+
+    </script>
+</dom-module>

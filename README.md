@@ -1,5 +1,5 @@
-# \<ft-connect-demo\>
+# \<ft-partner-application\>
 
-A demo of the drop-in FileThis Connect element.
+A drop-in integration with FileThis partner services.
 
 View on GitHub
