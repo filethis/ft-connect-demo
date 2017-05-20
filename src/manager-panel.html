@@ -52,13 +52,14 @@ limitations under the License.
                         opened="{{_managerIsOpen}}">
                     <paper-tabs
                             id="managerPanelTabs"
-                            selected="{{_selectedManagerPanelTabIndex}}"
+                            attr-for-selected="name"
+                            selected="{{_selectedManagerPanelTabName}}"
                             hidden$="[[!_managerIsOpen]]"
                             style="font-size:16pt;">
-                        <paper-tab id="ccc">Start</paper-tab>
-                        <paper-tab id="ccc">Config</paper-tab>
-                        <paper-tab id="bbb">Styling</paper-tab>
-                        <paper-tab id="aaa">Ticket</paper-tab>
+                        <paper-tab name="start">Start</paper-tab>
+                        <paper-tab name="config">Config</paper-tab>
+                        <paper-tab name="styling">Styling</paper-tab>
+                        <paper-tab name="ticket">Ticket</paper-tab>
                     </paper-tabs>
                 </iron-collapse>
 
@@ -79,48 +80,40 @@ limitations under the License.
 
                 <!-- Manager panels -->
                 <iron-pages id="panels"
+                            attr-for-selected="name"
                             style="width:100%; height:100%;"
-                            selected="{{_selectedManagerPanelTabIndex}}">
+                            selected="{{_selectedManagerPanelTabName}}">
 
                     <!-- Start manager panel -->
-                    <div>
+                    <div name="start">
                         Start
                     </div>
 
                     <!-- Config manager panel -->
-                    <div>
+                    <div name="config">
                         Config
                     </div>
 
                     <!-- Styling manager panel -->
-                    <div>
+                    <div name="styling">
                         Styling
                     </div>
 
                     <!-- Test account manager panel -->
-                    <div class="layout vertical center" style="width:100%; padding-top:16px">
+                    <div class="layout vertical center"
+                         name="ticket"
+                         style="width:100%; padding-top:16px">
 
                         <!-- Test account manager -->
                         <ft-test-account-manager
                                 id="testAccountManager"
                                 server="{{server}}"
-                                userAccountId="{{userAccountId}}"
+                                user-account-id="{{userAccountId}}"
                                 ticket="{{ticket}}">
                         </ft-test-account-manager>
-
-                        <div style="height:16px"></div>
-
-                        <!-- Inject button -->
-                        <paper-button raised
-                                      style="font-family:Arial"
-                                      on-click="_onConnectButtonClicked">
-                            Inject Ticket
-                        </paper-button>
                     </div>
 
                 </iron-pages>
-
-
             </iron-collapse>
 
         </div>
@@ -141,22 +134,14 @@ limitations under the License.
                 {
                     type: String,
                     notify: true,
-                    value: "",
-                    observer: "_onServerChanged"
+                    value: "https://filethis.com"
                 },
-//                server:
-//                {
-//                    type: String,
-//                    notify: true,
-//                    value: "https://filethis.com"
-//                },
 
                 /** The user's FileThis account id. */
                 userAccountId: {
                     type: String,
                     notify: true,
-                    value: "",
-                    observer: "_onUserAccountIdChanged"
+                    value: ""
                 },
 
                 /** The end-user FileThis ticket. Used to authenticate and authorize requests to the FileThis API endpoints. */
@@ -164,8 +149,7 @@ limitations under the License.
                 {
                     type: String,
                     notify: true,
-                    value: "",
-                    observer: "_onTicketChanged"
+                    value: ""
                 },
 
                 _managerIsOpen:
@@ -175,30 +159,12 @@ limitations under the License.
                     value: "true"
                 },
 
-                _selectedManagerPanelTabIndex:
+                _selectedManagerPanelTabName:
                 {
-                    type: Number,
-                    notify: true,
-                    value: "3"
+                    type: String,
+                    value: "ticket"
                 }
             },
-
-            _onServerChanged: function()
-            {
-                var theServer = this.server;
-            },
-
-            _onUserAccountIdChanged: function()
-            {
-                var theUserAccountId = this.userAccountId;
-            },
-
-            _onTicketChanged: function()
-            {
-                var theTicket = this.ticket;
-            },
-
-
 
             _calculateManagerIcon: function(isOpen)
             {
