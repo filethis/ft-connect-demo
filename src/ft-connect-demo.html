@@ -30,7 +30,12 @@ limitations under the License.
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
 <link rel="import" href="../bower_components/ft-test-account-manager/ft-test-account-manager.html">
-<link rel="import" href="../bower_components/ft-connect/ft-connect.html">
+<link rel="import" href="../bower_components/ft-connect-standard/ft-connect-standard.html">
+<!--<link rel="import" href="../bower_components/ft-connect/ft-connect.html">-->
+<link rel="import" href="../bower_components/ft-icon-button/ft-icon-button.html">
+<link rel="import" href="../bower_components/ft-error-behavior/ft-error-behavior.html">
+<link rel="import" href="../bower_components/ft-http-behavior/ft-http-behavior.html">
+<link rel="import" href="../bower_components/ft-confirmation-dialog/ft-confirmation-dialog.html">
 
 <link rel="import" href="manager-panel.html">
 
@@ -44,7 +49,7 @@ This is a fully-functional sample application that uses all of the components pr
 
 <dom-module id="ft-connect-demo">
 
-    <style include="iron-flex iron-flex-alignment"></style>
+    <style include="iron-flex iron-flex-alignment iron-flex-factors"></style>
 
     <template>
 
@@ -60,38 +65,56 @@ This is a fully-functional sample application that uses all of the components pr
 
             <!-- Manager panel -->
             <manager-panel
-                    id="connectPanel"
+                    id="managerPanel"
+                    enabled="{{enabled}}"
+                    can-enable="{{canEnable}}"
                     server="{{server}}"
                     user-account-id="{{userAccountId}}"
-                    ticket="{{ticket}}">
+                    ticket="{{ticket}}"
+                    style="border-right:1px solid black;">
             </manager-panel>
 
-            <!-- Drop-in panel and dead page -->
+            <!-- FileThis Connect panel and dead page -->
             <iron-pages id="liveOrDeadPages"
                         style="width:100%; height:100%;"
                         attr-for-selected="name"
-                        selected="{{_liveOrDeadPageName}}">
+                        selected="{{_enabledOrDisabledPageName}}">
 
-                <!-- Dead page -->
-                <div name="dead">
-                    Dead
+                <!-- FileThis Connect panel -->
+                <div
+                        class="vertical layout center"
+                        name="enabled"
+                        style="width:100%; height:100%;">
+
+                    <ft-connect-standard
+                            id="connectPanel"
+                            style="width:100%; height:100%;"
+                            enabled="[[enabled]]"
+                            server="[[server]]"
+                            api-path="[[apiPath]]"
+                            user-account-id="[[userAccountId]]"
+                            ticket="[[ticket]]"
+                            interaction-version="[[interactionVersion]]"
+                            route="{{route}}"
+                            on-ft-connect-error="_handleFileThisConnectErrorEvent">
+                    </ft-connect-standard>
                 </div>
 
-                <!-- Drop-in panel -->
-                <ft-connect
-                        id="connectPanel"
-                        name="live"
-                        route="{{route}}"
-                        style="width:100%; height:100%;"
-                        server="[[server]]"
-                        user-account-id="[[userAccountId]]"
-                        ticket="[[ticket]]"
-                        is-live="{{isLive}}"
-                        interaction-version="[[interactionVersion]]">
-                </ft-connect>
-            </iron-pages>
+                <!-- Disabled page -->
+                <div
+                        name="disabled"
+                        class="vertical layout center"
+                        style="width:100%; height:100%">
+                    <div class="flex-1"></div>
+                    <div>Disabled</div>
+                    <div class="flex-2"></div>
+                </div>
 
+            </iron-pages>
         </div>
+
+        <!-- Confirmation dialog -->
+        <ft-confirmation-dialog id="confirmationDialog"></ft-confirmation-dialog>
 
     </template>
 
@@ -100,13 +123,39 @@ This is a fully-functional sample application that uses all of the components pr
 
             is: 'ft-connect-demo',
 
+            behaviors: [FtErrorBehavior, FtHttpBehavior],
+
             properties:
             {
+                /** Whether the FileThis Connect instance is enabled or not */
+                enabled:
+                {
+                    type: Boolean,
+                    notify: true,
+                    value: false,
+                    observer: "_onEnabledChanged"
+                },
+
+                /** Whether the FileThis Connect instance can be enabled or not */
+                canEnable:
+                {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+
                 /** The "base" URL for requests. For example: "https://filethis.com". Note that you should not use a trailing slash. */
                 server:
                 {
                     type: String,
                     value: "https://filethis.com"
+                },
+
+                /** The path under the baseUrl used for API requests. For example: "/api/v1". Note that you should use a leading slash, and no trailing slash. */
+                apiPath:
+                {
+                    type: String,
+                    value: "/api/v1"
                 },
 
                 /** The user's FileThis account id. */
@@ -129,26 +178,6 @@ This is a fully-functional sample application that uses all of the components pr
                     value: "1.0.0"
                 },
 
-                liveIsActive:
-                {
-                    type: Boolean,
-                    value: true
-                },
-
-                deadIsActive:
-                {
-                    type: Boolean,
-                    value: false
-                },
-
-                isLive:
-                {
-                    type: Boolean,
-                    notify: true,
-                    value: false,
-                    observer: "_onIsLiveChanged"
-                },
-
                 // TODO: Remove once polling is done
                 pollForChangeNotifications:
                 {
@@ -156,20 +185,60 @@ This is a fully-functional sample application that uses all of the components pr
                     value: true
                 },
 
-                _liveOrDeadPageName:
+                _enabledOrDisabledPageName:
                 {
                     type: String,
-                    value: "dead"
+                    value: "disabled"
+                },
+
+                _suppressWriteToLocalStorage: {
+                    type: Boolean,
+                    value: true
                 }
             },
 
-            _onIsLiveChanged: function()
+            ready: function()
             {
-                if (this.isLive)
-                    this._liveOrDeadPageName = "live";
+                // TODO: Make auto-enable at startup a preference?
+                this.async(function()
+                {
+                    if (this.canEnable)
+                        this.enabled = true;
+                }, 500)
+            },
+
+            _onEnabledChanged: function()
+            {
+                if (this.enabled)
+                    this._enabledOrDisabledPageName = "enabled";
                 else
-                    this._liveOrDeadPageName = "dead";
+                    this._enabledOrDisabledPageName = "disabled";
+            },
+
+            _handleFileThisConnectErrorEvent: function(event)
+            {
+                this.enabled = false;
+
+                const error = event.detail;
+
+                // Handle certain server error responses
+                if (error instanceof FtHttpUnsuccessfulError)
+                {
+                    const status = error.status;
+                    const response = error.response;
+
+                    // If the ticket expired, or is invalid
+                    if (status === 400 &&
+                        response.message === "Session ticket expired")
+                    {
+                        this.$.confirmationDialog.alert("User ticket is expired or invalid.");
+                        return;
+                    }
+                }
+
+                this.handleCaughtError(error);
             }
+
         })
 
     </script>
