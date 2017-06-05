@@ -31,7 +31,7 @@
         "ft-connect": "filethis/ft-connect#^0.0.1",
         "ft-connect-standard": "filethis/ft-connect-standard#^0.0.1",
         "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.1",
-        "ft-icon-button": "filethis/icon-button#^0.0.1",
+        "ft-icon-button": "filethis/ft-icon-button#^0.0.1",
         "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^1.0.7",
         "array-filter": "43081j/array-filter#^1.0.2",
         "validator-js": "^7.0.0",
