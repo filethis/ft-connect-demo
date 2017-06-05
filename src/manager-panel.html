@@ -59,18 +59,18 @@ limitations under the License.
                 <iron-collapse
                         id="collapse"
                         horizontal="true"
-                        opened="[[_managerIsOpen]]">
+                        opened="[[managerIsOpen]]">
                     <paper-tabs
                             id="managerPanelTabs"
                             attr-for-selected="name"
                             selected="{{_selectedManagerPanelTabName}}"
-                            hidden$="[[!_managerIsOpen]]"
+                            hidden$="[[!managerIsOpen]]"
                             on-iron-select="_onPanelSelected"
                             style="font-size:14pt;">
                         <paper-tab name="start">Start</paper-tab>
                         <!--<paper-tab name="config">Config</paper-tab>-->
                         <!--<paper-tab name="styling">Styling</paper-tab>-->
-                        <paper-tab name="ticket">Token</paper-tab>
+                        <paper-tab name="token">Token</paper-tab>
                     </paper-tabs>
                 </iron-collapse>
 
@@ -84,12 +84,12 @@ limitations under the License.
                         disabled="[[!canEnable]]"
                         icon="power-settings-new"
                         label="[[_calculateEnabledButtonLabel(enabled)]]"
-                        hidden$="[[!_managerIsOpen]]"
+                        hidden$="[[!managerIsOpen]]"
                         pressed="{{enabled}}">
                 </ft-icon-button>
 
                 <!-- Spacer -->
-                <div style="width:15px;" hidden$="[[!_managerIsOpen]]"></div>
+                <div style="width:15px;" hidden$="[[!managerIsOpen]]"></div>
 
                 <!-- Expand/collapse button panel -->
                 <div class="layout vertical center">
@@ -97,7 +97,7 @@ limitations under the License.
                     <!-- Expand/collapse button -->
                     <paper-icon-button
                             id="expandCollapseButton"
-                            icon="[[_calculateManagerIcon(_managerIsOpen)]]"
+                            icon="[[_calculateManagerIcon(managerIsOpen)]]"
                             on-click="_onExpandCollapseButtonClicked">
                     </paper-icon-button>
 
@@ -109,7 +109,7 @@ limitations under the License.
                             style="margin-top:20px;"
                             label="[[_calculateEnabledButtonLabel(enabled)]]"
                             icon="power-settings-new"
-                            hidden$="[[_managerIsOpen]]"
+                            hidden$="[[managerIsOpen]]"
                             pressed="{{enabled}}">
                     </ft-icon-button>
 
@@ -118,7 +118,7 @@ limitations under the License.
                             <!--label="Refresh"-->
                             <!--style="margin-top:16px;"-->
                             <!--icon="refresh"-->
-                            <!--hidden$="[[_managerIsOpen]]">-->
+                            <!--hidden$="[[managerIsOpen]]">-->
                     <!--</ft-icon-button>-->
 
                 </div>
@@ -130,7 +130,7 @@ limitations under the License.
                     id="collapse"
                     horizontal="true"
                     style="width:100%"
-                    opened="[[_managerIsOpen]]">
+                    opened="[[managerIsOpen]]">
 
                 <!-- Manager panels -->
                 <iron-pages id="panels"
@@ -154,7 +154,7 @@ limitations under the License.
 
                     <!-- Test account manager panel -->
                     <div class="layout vertical center"
-                         name="ticket"
+                         name="token"
                          style="width:100%;">
 
                         <!-- Test account manager -->
@@ -165,7 +165,7 @@ limitations under the License.
                                 server="{{server}}"
                                 api-path="{{apiPath}}"
                                 user-account-id="{{userAccountId}}"
-                                ticket="{{ticket}}">
+                                token="{{token}}">
                         </ft-test-account-manager>
                     </div>
                 </iron-pages>
@@ -220,8 +220,8 @@ limitations under the License.
                     value: ""
                 },
 
-                /** The end-user FileThis ticket. Used to authenticate and authorize requests to the FileThis API endpoints. */
-                ticket:
+                /** The end-user FileThis token. Used to authenticate and authorize requests to the FileThis API endpoints. */
+                token:
                 {
                     type: String,
                     notify: true,
@@ -229,7 +229,7 @@ limitations under the License.
                 },
 
                 /** Whether the manager panel is open or not. */
-                _managerIsOpen:
+                managerIsOpen:
                 {
                     type: Boolean,
                     notify: true,
@@ -240,7 +240,7 @@ limitations under the License.
                 _selectedManagerPanelTabName:
                 {
                     type: String,
-                    value: "ticket"
+                    value: "token"
                 }
             },
             
@@ -251,7 +251,7 @@ limitations under the License.
             {
                 this.async(function()
                 {
-                    this._managerIsOpen = this._readFromLocalStorageBoolean("managerIsOpen", true);
+                    this.managerIsOpen = this._readFromLocalStorageBoolean("managerIsOpen", true);
                     this._selectedManagerPanelTabName = this._readFromLocalStorage("selectedManagerPanelTabName", "start");
                 });
             },
@@ -291,7 +291,7 @@ limitations under the License.
             {
                 // TODO: Find out how to get rid of this fugly workaround
                 var hack;
-                if (this._managerIsOpen)
+                if (this.managerIsOpen)
                     hack = "0";
                 else
                     hack = "60px";
@@ -303,8 +303,8 @@ limitations under the License.
 
             _onExpandCollapseButtonClicked: function()
             {
-                this._managerIsOpen = !this._managerIsOpen;
-                localStorage.setItem("managerIsOpen", JSON.stringify(this._managerIsOpen));
+                this.managerIsOpen = !this.managerIsOpen;
+                localStorage.setItem("managerIsOpen", JSON.stringify(this.managerIsOpen));
             },
 
             _onPanelSelected: function()

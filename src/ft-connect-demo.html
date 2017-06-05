@@ -70,7 +70,7 @@ This is a fully-functional sample application that uses all of the components pr
                     can-enable="{{canEnable}}"
                     server="{{server}}"
                     user-account-id="{{userAccountId}}"
-                    ticket="{{ticket}}"
+                    token="{{token}}"
                     style="border-right:1px solid black;">
             </manager-panel>
 
@@ -93,7 +93,7 @@ This is a fully-functional sample application that uses all of the components pr
                             server="[[server]]"
                             api-path="[[apiPath]]"
                             user-account-id="[[userAccountId]]"
-                            ticket="[[ticket]]"
+                            token="[[token]]"
                             interaction-version="[[interactionVersion]]"
                             route="{{route}}"
                             on-ft-connect-error="_handleFileThisConnectErrorEvent">
@@ -164,8 +164,8 @@ This is a fully-functional sample application that uses all of the components pr
                     value: ""
                 },
 
-                /** The end-user FileThis ticket. Used to authenticate and authorize requests to the FileThis API endpoints. */
-                ticket:
+                /** The end-user FileThis token. Used to authenticate and authorize requests to the FileThis API endpoints. */
+                token:
                 {
                     type: String,
                     value: ""
@@ -207,7 +207,7 @@ This is a fully-functional sample application that uses all of the components pr
                 }, 500)
             },
 
-            _onEnabledChanged: function()
+            _onEnabledChanged: function(to, from)
             {
                 if (this.enabled)
                     this._enabledOrDisabledPageName = "enabled";
@@ -227,11 +227,13 @@ This is a fully-functional sample application that uses all of the components pr
                     const status = error.status;
                     const response = error.response;
 
-                    // If the ticket expired, or is invalid
+                    // If the token expired, or is invalid
                     if (status === 400 &&
-                        response.message === "Session ticket expired")
+                        !!response &&
+                        !!response.message &&
+                        response.message === "User access token expired")
                     {
-                        this.$.confirmationDialog.alert("User ticket is expired or invalid.");
+                        this.$.confirmationDialog.alert("User access token is expired or invalid.");
                         return;
                     }
                 }
