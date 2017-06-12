@@ -33,6 +33,7 @@ limitations under the License.
 <link rel="import" href="../bower_components/ft-icon-button/ft-icon-button.html">
 
 <link rel="import" href="start-panel.html">
+<link rel="import" href="config-panel.html">
 
 
 <dom-module id="manager-panel">
@@ -69,7 +70,7 @@ limitations under the License.
                             on-iron-select="_onPanelSelected"
                             style="font-size:14pt;">
                         <paper-tab name="start">Start</paper-tab>
-                        <!--<paper-tab name="config">Config</paper-tab>-->
+                        <paper-tab name="config">Config</paper-tab>
                         <!--<paper-tab name="styling">Styling</paper-tab>-->
                         <paper-tab name="token">Token</paper-tab>
                     </paper-tabs>
@@ -144,9 +145,10 @@ limitations under the License.
                     </start-panel>
 
                     <!-- Config manager panel -->
-                    <!--<div name="config">-->
-                        <!--Config-->
-                    <!--</div>-->
+                    <config-panel
+                            name="config"
+                            selected-flavor="{{flavor}}">
+                    </config-panel>
 
                     <!-- Styling manager panel -->
                     <!--<div name="styling">-->
@@ -182,6 +184,12 @@ limitations under the License.
 
             properties:
             {
+                flavor:
+                {
+                    type: String,
+                    notify: true
+                },
+
                 /** Whether the FileThis Connect instance is enabled or not */
                 enabled:
                 {

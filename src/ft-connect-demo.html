@@ -32,7 +32,7 @@ limitations under the License.
 
 <link rel="import" href="../bower_components/ft-test-account-manager/ft-test-account-manager.html">
 <link rel="import" href="../bower_components/ft-connect-standard/ft-connect-standard.html">
-<!--<link rel="import" href="../bower_components/ft-connect/ft-connect.html">-->
+<link rel="import" href="../bower_components/ft-connect/ft-connect.html">
 <link rel="import" href="../bower_components/ft-icon-button/ft-icon-button.html">
 <link rel="import" href="../bower_components/ft-error-behavior/ft-error-behavior.html">
 <link rel="import" href="../bower_components/ft-http-behavior/ft-http-behavior.html">
@@ -67,6 +67,7 @@ This is a fully-functional sample application that uses all of the components pr
             <!-- Manager panel -->
             <manager-panel
                     id="managerPanel"
+                    flavor="{{flavor}}"
                     enabled="{{enabled}}"
                     can-enable="{{canEnable}}"
                     server="{{server}}"
@@ -87,18 +88,49 @@ This is a fully-functional sample application that uses all of the components pr
                         name="enabled"
                         style="width:100%; height:100%;">
 
-                    <ft-connect-standard
-                            id="connectPanel"
-                            style="width:100%; height:100%;"
-                            enabled="[[enabled]]"
-                            server="[[server]]"
-                            api-path="[[apiPath]]"
-                            user-account-id="[[userAccountId]]"
-                            token="[[token]]"
-                            interaction-version="[[interactionVersion]]"
-                            route="{{route}}"
-                            on-ft-connect-error="_handleFileThisConnectErrorEvent">
-                    </ft-connect-standard>
+                    <iron-pages
+                            attr-for-selected="name"
+                            selected=[[flavor]]>
+
+                        <!-- ft-connect-standard -->
+                        <ft-connect-standard
+                                name="ft-connect-standard"
+                                style="width:100%; height:100%;"
+                                enabled="[[enabled]]"
+                                server="[[server]]"
+                                api-path="[[apiPath]]"
+                                user-account-id="[[userAccountId]]"
+                                token="[[token]]"
+                                interaction-version="[[interactionVersion]]"
+                                route="{{route}}"
+                                on-ft-connect-error="_handleFileThisConnectErrorEvent">
+                        </ft-connect-standard>
+
+                        <!-- ft-connect -->
+                        <!--<div name="ft-connect">-->
+                            <!--ft-connect-->
+                        <!--</div>-->
+                        <div name="ft-connect">
+                            <ft-connect
+                                    name="ft-connect"
+                                    style="width:100%; height:100%;"
+                                    enabled="[[enabled]]"
+                                    server="[[server]]"
+                                    api-path="[[apiPath]]"
+                                    user-account-id="[[userAccountId]]"
+                                    token="[[token]]"
+                                    interaction-version="[[interactionVersion]]"
+                                    route="{{route}}"
+                                    on-ft-connect-error="_handleFileThisConnectErrorEvent">
+                            </ft-connect>
+                        </div>
+
+                        <!-- ft-connect-mobile -->
+                        <div name="ft-connect-mobile">
+                            ft-connect-mobile
+                        </div>
+
+                    </iron-pages>
                 </div>
 
                 <!-- Disabled page -->
@@ -128,6 +160,12 @@ This is a fully-functional sample application that uses all of the components pr
 
             properties:
             {
+                flavor:
+                {
+                    type: String,
+                    notify: true
+                },
+
                 /** Whether the FileThis Connect instance is enabled or not */
                 enabled:
                 {
