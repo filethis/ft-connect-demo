@@ -54,6 +54,12 @@ This is a fully-functional sample application that uses all of the components pr
 
     <template>
 
+        <style>
+            :host {
+                display:block;
+            }
+        </style>
+
         <!-- Two-way bind the application route to the browser's address bar -->
         <app-location
                 use-hash-as-path
