@@ -62,7 +62,7 @@ This is a fully-functional sample application that uses all of the components pr
 
         <!-- Top -->
         <div class="layout horizontal"
-            style="width:100%; height:100%;">
+            style="width:100%; height:100%; background-color:#FAFAFA">
 
             <!-- Manager panel -->
             <manager-panel
@@ -95,7 +95,7 @@ This is a fully-functional sample application that uses all of the components pr
                         <!-- ft-connect-standard -->
                         <ft-connect-standard
                                 name="ft-connect-standard"
-                                style="width:100%; height:100%;"
+                                style="width:600px; height:500px; background-color:indianred; border:1px solid #DDD; "
                                 enabled="[[enabled]]"
                                 server="[[server]]"
                                 api-path="[[apiPath]]"
@@ -107,23 +107,23 @@ This is a fully-functional sample application that uses all of the components pr
                         </ft-connect-standard>
 
                         <!-- ft-connect -->
-                        <!--<div name="ft-connect">-->
-                            <!--ft-connect-->
-                        <!--</div>-->
                         <div name="ft-connect">
-                            <ft-connect
-                                    name="ft-connect"
-                                    style="width:100%; height:100%;"
-                                    enabled="[[enabled]]"
-                                    server="[[server]]"
-                                    api-path="[[apiPath]]"
-                                    user-account-id="[[userAccountId]]"
-                                    token="[[token]]"
-                                    interaction-version="[[interactionVersion]]"
-                                    route="{{route}}"
-                                    on-ft-connect-error="_handleFileThisConnectErrorEvent">
-                            </ft-connect>
+                            ft-connect
                         </div>
+                        <!--<div name="ft-connect">-->
+                            <!--<ft-connect-->
+                                    <!--name="ft-connect"-->
+                                    <!--style="width:100%; height:100%;"-->
+                                    <!--enabled="[[enabled]]"-->
+                                    <!--server="[[server]]"-->
+                                    <!--api-path="[[apiPath]]"-->
+                                    <!--user-account-id="[[userAccountId]]"-->
+                                    <!--token="[[token]]"-->
+                                    <!--interaction-version="[[interactionVersion]]"-->
+                                    <!--route="{{route}}"-->
+                                    <!--on-ft-connect-error="_handleFileThisConnectErrorEvent">-->
+                            <!--</ft-connect>-->
+                        <!--</div>-->
 
                         <!-- ft-connect-mobile -->
                         <div name="ft-connect-mobile">
