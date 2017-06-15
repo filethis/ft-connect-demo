@@ -60,6 +60,13 @@ This is a fully-functional sample application that uses all of the components pr
             }
         </style>
 
+        <style>
+            :host {
+                width:100%;
+                height:100%;
+            }
+        </style>
+
         <!-- Two-way bind the application route to the browser's address bar -->
         <app-location
                 use-hash-as-path
@@ -92,7 +99,9 @@ This is a fully-functional sample application that uses all of the components pr
                 <div
                         class="vertical layout center"
                         name="enabled"
-                        style="width:100%; height:100%;">
+                        style="width:100%; height:100%; ">
+
+                    <div style="height:100px"> </div>
 
                     <iron-pages
                             attr-for-selected="name"
@@ -101,7 +110,6 @@ This is a fully-functional sample application that uses all of the components pr
                         <!-- ft-connect-standard -->
                         <ft-connect-standard
                                 name="ft-connect-standard"
-                                style="width:600px; height:500px; background-color:indianred; border:1px solid #DDD; "
                                 enabled="[[enabled]]"
                                 server="[[server]]"
                                 api-path="[[apiPath]]"
