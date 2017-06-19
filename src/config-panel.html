@@ -83,7 +83,7 @@ limitations under the License.
                 {
                     type: String,
                     notify: true,
-                    value: "ft-connect-standard",
+                    value: "ft-connect-expand-out",
                     observer: "_onSelectedFlavorChanged"
                 },
 
@@ -111,12 +111,14 @@ limitations under the License.
             {
                 switch (flavor)
                 {
-                    case "ft-connect-standard":
+                    case "ft-connect-expand-in":
                         return 0;
-                    case "ft-connect":
+                    case "ft-connect-expand-out":
                         return 1;
-                    case "ft-connect-mobile":
+                    case "ft-connect-tabbed":
                         return 2;
+                    case "ft-connect-wizard":
+                        return 3;
                     default:
                         throw new Error("Unknown FileThis Connect flavor: " + flavor);
                 }
@@ -127,13 +129,16 @@ limitations under the License.
                 switch (this._selectedFlavorIndex)
                 {
                     case 0:
-                        this.selectedFlavor = "ft-connect-standard";
+                        this.selectedFlavor = "ft-connect-expand-in";
                         break;
                     case 1:
-                        this.selectedFlavor = "ft-connect";
+                        this.selectedFlavor = "ft-connect-expand-out";
                         break;
                     case 2:
-                        this.selectedFlavor = "ft-connect-mobile";
+                        this.selectedFlavor = "ft-connect-tabbed";
+                        break;
+                    case 3:
+                        this.selectedFlavor = "ft-connect-wizard";
                         break;
                     default:
                         throw new Error("Invalid flavor index: " + this._selectedFlavorIndex.toString());
