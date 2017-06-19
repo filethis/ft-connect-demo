@@ -33,6 +33,7 @@ limitations under the License.
 <link rel="import" href="../bower_components/ft-icon-button/ft-icon-button.html">
 
 <link rel="import" href="start-panel.html">
+<link rel="import" href="inspect-panel.html">
 <link rel="import" href="config-panel.html">
 
 
@@ -77,6 +78,7 @@ limitations under the License.
                             style="font-size:14pt;">
                         <paper-tab name="start">Start</paper-tab>
                         <paper-tab name="config">Config</paper-tab>
+                        <paper-tab name="inspect">Inspect</paper-tab>
                         <!--<paper-tab name="styling">Styling</paper-tab>-->
                         <paper-tab name="token">Token</paper-tab>
                     </paper-tabs>
@@ -160,6 +162,12 @@ limitations under the License.
                     <!--<div name="styling">-->
                         <!--Styling-->
                     <!--</div>-->
+
+                    <!-- Inspect manager panel -->
+                    <inspect-panel
+                            name="inspect"
+                            component-name="{{componentName}}">
+                    </inspect-panel>
 
                     <!-- Test account manager panel -->
                     <div class="layout vertical center"
@@ -252,6 +260,13 @@ limitations under the License.
                     observer: "_managerIsOpenChanged"
                 },
 
+                componentName:
+                {
+                    type: String,
+                    notify: true,
+                    value: null
+                },
+
                 _selectedManagerPanelTabName:
                 {
                     type: String,
@@ -333,7 +348,7 @@ limitations under the License.
             _readFromLocalStorage: function(name, defaultValue)
             {
                 var value = localStorage.getItem(name);
-                if (value == null)
+                if (value === null)
                     value = defaultValue;
                 return value;
             },
@@ -341,7 +356,7 @@ limitations under the License.
             _readFromLocalStorageBoolean: function(name, defaultValue)
             {
                 var value = localStorage.getItem(name);
-                if (value == null)
+                if (value === null)
                     value = defaultValue;
                 return JSON.parse(value);
             }
