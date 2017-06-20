@@ -32,7 +32,7 @@
     "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.1",
     "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.1",
     "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.4",
-    "ft-icon-button": "filethis/ft-icon-button#^0.0.4",
+    "ft-labeled-icon-button": "filethis/ft-labeled-icon-button#^0.0.4",
     "ft-scrolling-behavior": "filethis/ft-scrolling-behavior#^0.0.1",
     "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^2.0.0",
     "array-filter": "43081j/array-filter#^1.0.2",
