@@ -39,22 +39,22 @@ limitations under the License.
 
 <dom-module id="manager-panel">
 
-    <style include="iron-flex iron-flex-alignment iron-positioning"></style>
-
-    <style>
-        :host {
-            display:block;
-        }
-    </style>
-
-    <style>
-        #managerPanelTabs
-        {
-            --paper-tabs-selection-bar-color:blue;
-        }
-    </style>
-
     <template>
+
+        <style include="iron-flex iron-flex-alignment iron-positioning"></style>
+
+        <style>
+            :host {
+                display:block;
+            }
+        </style>
+
+        <style>
+            #managerPanelTabs
+            {
+                --paper-tabs-selection-bar-color:blue;
+            }
+        </style>
 
         <!-- Manager panel -->
         <div class="layout vertical end"
@@ -311,10 +311,10 @@ limitations under the License.
                 else
                     iconColor = "firebrick";
                 var icon = this.$.icon;
-                this.$.expandedEnabledButton.customStyle['--iron-icon-fill-color'] = iconColor;
-                this.$.expandedEnabledButton.updateStyles();
-                this.$.collapsedEnabledButton.customStyle['--iron-icon-fill-color'] = iconColor;
-                this.$.collapsedEnabledButton.updateStyles();
+//                this.$.expandedEnabledButton.customStyle['--iron-icon-fill-color'] = iconColor;
+//                this.$.expandedEnabledButton.updateStyles();
+//                this.$.collapsedEnabledButton.customStyle['--iron-icon-fill-color'] = iconColor;
+//                this.$.collapsedEnabledButton.updateStyles();
             },
             
             _managerIsOpenChanged: function()
