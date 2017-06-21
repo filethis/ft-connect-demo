@@ -6,7 +6,7 @@
     "shell": "src/ft-partner-application.html",
     "fragments": [
     ],
-    "sourceGlobs": [
+    "sources": [
      "src/**/*",
      "data/**/*",
      "bower.json"
