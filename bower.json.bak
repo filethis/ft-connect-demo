@@ -20,17 +20,17 @@
     "ft-create-connection-dialog": "filethis/ft-create-connection-dialog#^0.0.10",
     "ft-document-grid": "filethis/ft-document-grid#^0.0.7",
     "ft-document-grid-item": "filethis/ft-document-grid-item#^0.0.6",
-    "ft-document-list": "filethis/ft-document-list#^0.0.10",
+    "ft-document-list": "filethis/ft-document-list#^0.0.11",
     "ft-document-list-item": "filethis/ft-document-list-item#^0.0.11",
-    "ft-document-panel": "filethis/ft-document-panel#^0.0.11",
-    "ft-source-panel": "filethis/ft-source-panel#^0.0.11",
+    "ft-document-panel": "filethis/ft-document-panel#^0.0.12",
+    "ft-source-panel": "filethis/ft-source-panel#^0.0.12",
     "ft-user-interaction-form": "filethis/ft-user-interaction-form#^0.0.15",
     "ft-error-behavior": "filethis/ft-error-behavior#^0.0.4",
     "ft-http-behavior": "filethis/ft-http-behavior#^0.0.4",
     "ft-connect-behavior": "filethis/ft-connect-behavior#^0.0.2",
     "ft-confirmation-dialog": "filethis/ft-confirmation-dialog#^0.0.5",
     "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.5",
-    "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.8",
+    "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.11",
     "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.5",
     "ft-labeled-icon-button": "filethis/ft-labeled-icon-button#^0.0.3",
     "ft-scrolling-behavior": "filethis/ft-scrolling-behavior#^0.0.1",
@@ -53,6 +53,10 @@
   "ignore": [],
   "resolutions": {
     "polymer": "^2.0.1",
-    "webcomponentsjs": "^v1.0.0"
+    "webcomponentsjs": "^v1.0.0",
+    "marked-element": "^2.1.1",
+    "paper-styles": "^2.0.0",
+    "iron-flex-layout": "^2.0.0",
+    "iron-a11y-keys-behavior": "^2.0.0"
   }
 }

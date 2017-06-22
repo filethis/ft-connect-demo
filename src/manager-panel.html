@@ -105,11 +105,11 @@ limitations under the License.
                 <div class="layout vertical center">
 
                     <!-- Expand/collapse button -->
-                    <paper-icon-button
-                            id="expandCollapseButton"
-                            icon="[[_calculateManagerIcon(managerIsOpen)]]"
-                            on-click="_onExpandCollapseButtonClicked">
-                    </paper-icon-button>
+                    <!--<paper-icon-button-->
+                            <!--id="expandCollapseButton"-->
+                            <!--icon="[[_calculateManagerIcon(managerIsOpen)]]"-->
+                            <!--on-click="_onExpandCollapseButtonClicked">-->
+                    <!--</paper-icon-button>-->
 
                     <!-- Enabled button - shown when panel is collapsed -->
                     <ft-labeled-icon-button
@@ -135,58 +135,105 @@ limitations under the License.
 
             </div>
 
-            <!-- Collapsing panel -->
-            <iron-collapse
-                    id="collapse"
-                    horizontal="true"
-                    style="width:100%"
-                    opened="[[managerIsOpen]]">
 
-                <!-- Manager panels -->
-                <iron-pages id="panels"
-                            attr-for-selected="name"
-                            style="width:100%; height:100%"
-                            selected="{{_selectedManagerPanelTabName}}">
+            <!-- Manager panels -->
+            <iron-pages id="panels"
+                        attr-for-selected="name"
+                        style="width:100%; height:100%"
+                        selected="{{_selectedManagerPanelTabName}}">
 
-                    <!-- Start manager panel -->
-                    <start-panel name="start">
-                    </start-panel>
+                <!-- Start manager panel -->
+                <start-panel name="start">
+                </start-panel>
 
-                    <!-- Config manager panel -->
-                    <config-panel
-                            name="config"
-                            selected-flavor="{{flavor}}">
-                    </config-panel>
+                <!-- Config manager panel -->
+                <config-panel
+                        name="config"
+                        selected-flavor="{{flavor}}">
+                </config-panel>
 
-                    <!-- Styling manager panel -->
-                    <!--<div name="styling">-->
-                        <!--Styling-->
+                <!-- Styling manager panel -->
+                <!--<div name="styling">-->
+                    <!--Styling-->
+                <!--</div>-->
+
+                <!-- Inspect manager panel -->
+                <inspect-panel
+                        name="inspect"
+                        component-name="{{componentName}}">
+                </inspect-panel>
+
+                <!-- Test account manager panel -->
+                <div class="layout vertical center"
+                     name="token"
+                     style="width:100%;">
+
+                    <!-- Test account manager -->
+                    <ft-test-account-manager
+                            id="testAccountManager"
+                            enabled="{{enabled}}"
+                            can-enable="{{canEnable}}"
+                            server="{{server}}"
+                            api-path="{{apiPath}}"
+                            user-account-id="{{userAccountId}}"
+                            token="{{token}}">
+                    </ft-test-account-manager>
+                </div>
+            </iron-pages>
+
+            <!--&lt;!&ndash; Collapsing panel &ndash;&gt;-->
+            <!--<iron-collapse-->
+                    <!--id="collapse"-->
+                    <!--horizontal="true"-->
+                    <!--style="width:100%"-->
+                    <!--opened="[[managerIsOpen]]">-->
+                <!---->
+                <!--&lt;!&ndash; Manager panels &ndash;&gt;-->
+                <!--<iron-pages id="panels"-->
+                            <!--attr-for-selected="name"-->
+                            <!--style="width:100%; height:100%"-->
+                            <!--selected="{{_selectedManagerPanelTabName}}">-->
+
+                    <!--&lt;!&ndash; Start manager panel &ndash;&gt;-->
+                    <!--<start-panel name="start">-->
+                    <!--</start-panel>-->
+
+                    <!--&lt;!&ndash; Config manager panel &ndash;&gt;-->
+                    <!--<config-panel-->
+                            <!--name="config"-->
+                            <!--selected-flavor="{{flavor}}">-->
+                    <!--</config-panel>-->
+
+                    <!--&lt;!&ndash; Styling manager panel &ndash;&gt;-->
+                    <!--&lt;!&ndash;<div name="styling">&ndash;&gt;-->
+                        <!--&lt;!&ndash;Styling&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                    <!--&lt;!&ndash; Inspect manager panel &ndash;&gt;-->
+                    <!--<inspect-panel-->
+                            <!--name="inspect"-->
+                            <!--component-name="{{componentName}}">-->
+                    <!--</inspect-panel>-->
+
+                    <!--&lt;!&ndash; Test account manager panel &ndash;&gt;-->
+                    <!--<div class="layout vertical center"-->
+                         <!--name="token"-->
+                         <!--style="width:100%;">-->
+
+                        <!--&lt;!&ndash; Test account manager &ndash;&gt;-->
+                        <!--<ft-test-account-manager-->
+                                <!--id="testAccountManager"-->
+                                <!--enabled="{{enabled}}"-->
+                                <!--can-enable="{{canEnable}}"-->
+                                <!--server="{{server}}"-->
+                                <!--api-path="{{apiPath}}"-->
+                                <!--user-account-id="{{userAccountId}}"-->
+                                <!--token="{{token}}">-->
+                        <!--</ft-test-account-manager>-->
                     <!--</div>-->
+                <!--</iron-pages>-->
+            <!--</iron-collapse>-->
 
-                    <!-- Inspect manager panel -->
-                    <inspect-panel
-                            name="inspect"
-                            component-name="{{componentName}}">
-                    </inspect-panel>
-
-                    <!-- Test account manager panel -->
-                    <div class="layout vertical center"
-                         name="token"
-                         style="width:100%;">
-
-                        <!-- Test account manager -->
-                        <ft-test-account-manager
-                                id="testAccountManager"
-                                enabled="{{enabled}}"
-                                can-enable="{{canEnable}}"
-                                server="{{server}}"
-                                api-path="{{apiPath}}"
-                                user-account-id="{{userAccountId}}"
-                                token="{{token}}">
-                        </ft-test-account-manager>
-                    </div>
-                </iron-pages>
-            </iron-collapse>
         </div>
 
     </template>
@@ -319,13 +366,13 @@ limitations under the License.
             
             _managerIsOpenChanged: function()
             {
-                // TODO: Find out how to get rid of this fugly workaround
-                var hack;
-                if (this.managerIsOpen)
-                    hack = "0";
-                else
-                    hack = "60px";
-                this.$.expandCollapseButton.style.marginTop = hack;
+//                // TODO: Find out how to get rid of this fugly workaround
+//                var hack;
+//                if (this.managerIsOpen)
+//                    hack = "0";
+//                else
+//                    hack = "60px";
+//                this.$.expandCollapseButton.style.marginTop = hack;
             },
 
 
