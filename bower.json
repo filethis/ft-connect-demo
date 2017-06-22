@@ -31,7 +31,7 @@
     "ft-confirmation-dialog": "filethis/ft-confirmation-dialog#^0.0.5",
     "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.5",
     "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.11",
-    "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.5",
+    "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.6",
     "ft-labeled-icon-button": "filethis/ft-labeled-icon-button#^0.0.3",
     "ft-scrolling-behavior": "filethis/ft-scrolling-behavior#^0.0.1",
     "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^2.0.0",
