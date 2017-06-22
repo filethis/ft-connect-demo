@@ -1,0 +1,7 @@
+{
+  "name": "ft-partner-application",
+  "short_name": "ft-partner-application",
+  "description": "A drop-in integration with FileThis partner services.",
+  "start_url": "/",
+  "display": "standalone"
+}
