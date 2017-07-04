@@ -265,11 +265,11 @@ This is a fully-functional sample application that uses all of the components pr
             ready: function()
             {
                 // TODO: Make auto-enable at startup a preference?
-//                this.async(function()
-//                {
-//                    if (this.canEnable)
-//                        this.enabled = true;
-//                }, 500)
+                this.async(function()
+                {
+                    if (this.canEnable)
+                        this.enabled = true;
+                }, 500)
             },
 
             _onTap: function(event)
