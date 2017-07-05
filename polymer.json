@@ -1,15 +1,16 @@
 {
     "entrypoint": "index.html",
     "lint": {
-      "rules": ["polymer-2-hybrid"]
+        "rules": ["polymer-2-hybrid"],
+        "ignoreWarnings": ["multiple-doc-comments"]
     },
     "shell": "src/ft-connect-demo.html",
     "fragments": [
     ],
     "sources": [
-     "src/**/*",
-     "data/**/*",
-     "bower.json"
+        "src/**/*",
+        "data/**/*",
+        "bower.json"
     ],
     "extraDependencies": [
         "manifest.json",

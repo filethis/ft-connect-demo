@@ -18,7 +18,6 @@ limitations under the License.
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
-<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
@@ -274,7 +273,7 @@ This is a fully-functional sample application that uses all of the components pr
 
             _onTap: function(event)
             {
-                const componentName = event.ftComponentName;
+                var componentName = event.ftComponentName;
                 this._inspect(componentName);
             },
 
@@ -298,13 +297,13 @@ This is a fully-functional sample application that uses all of the components pr
             {
                 this.enabled = false;
 
-                const error = event.detail;
+                var error = event.detail;
 
                 // Handle certain server error responses
                 if (error instanceof FtHttpUnsuccessfulError)
                 {
-                    const status = error.status;
-                    const response = error.response;
+                    var status = error.status;
+                    var response = error.response;
 
                     // If the token expired, or is invalid
                     if (status === 400 &&
