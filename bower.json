@@ -4,9 +4,9 @@
   "main": "index.html",
   "dependencies": {
     "app-route": "PolymerElements/app-route#1 - 2",
-    "ft-confirmation-dialog": "filethis/ft-confirmation-dialog#^0.0.5",
-    "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.11",
-    "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.5",
+    "ft-confirmation-dialog": "filethis/ft-confirmation-dialog#^0.0.7",
+    "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.13",
+    "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.7",
     "iron-a11y-keys": "PolymerElements/iron-a11y-keys#1 - 2",
     "iron-collapse": "PolymerElements/iron-collapse#^1.0.0",
     "iron-image": "PolymerElements/iron-image#1 - 2",
