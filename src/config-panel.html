@@ -38,18 +38,6 @@ limitations under the License.
         <div class="layout vertical"
                     style="height:100%; border-right:1px solid #DDD; padding:12px;">
 
-            <!-- Flavors -->
-            <paper-dropdown-menu label="Flavors" style="width:200px;">
-                <paper-listbox
-                        class="dropdown-content"
-                        slot="dropdown-content"
-                        selected="{{_selectedFlavorIndex}}">
-                    <template is="dom-repeat" items="[[flavors]]" as="flavor">
-                        <paper-item>[[flavor]]</paper-item>
-                    </template>
-                </paper-listbox>
-            </paper-dropdown-menu>
-
         </div>
 
     </template>
@@ -61,86 +49,7 @@ limitations under the License.
 
             behaviors: [FileThis.ErrorBehavior, FileThis.HttpBehavior],
 
-            properties:
-            {
-                flavors:
-                {
-                    type: Array,
-                    notify: true,
-                    value: [
-                        'ft-connect-expand-in',
-                        'ft-connect-expand-out',
-                        'ft-connect-tabbed',
-                        'ft-connect-wizard'
-                    ]
-                },
-
-                selectedFlavor:
-                {
-                    type: String,
-                    notify: true,
-                    value: "ft-connect-expand-out",
-                    observer: "_onSelectedFlavorChanged"
-                },
-
-                _selectedFlavorIndex:
-                {
-                    type: Number,
-                    notify: true,
-                    value: "1",
-                    observer: "_onSelectedFlavorIndexChanged"
-                }
-            },
-
-
-            // Startup -------------------------------------------------------------------------------------
-
-            _onSelectedFlavorChanged: function(to, from)
-            {
-                // Update the popup selection
-                this._selectedFlavorIndex = this._mapFlavorToIndex(this.selectedFlavor);
-
-                // TODO: Load code dynamically here?
-            },
-            
-            _mapFlavorToIndex: function(flavor)
-            {
-                switch (flavor)
-                {
-                    case "ft-connect-expand-in":
-                        return 0;
-                    case "ft-connect-expand-out":
-                        return 1;
-                    case "ft-connect-tabbed":
-                        return 2;
-                    case "ft-connect-wizard":
-                        return 3;
-                    default:
-                        throw new Error("Unknown FileThis Connect flavor: " + flavor);
-                }
-            },
-
-            _onSelectedFlavorIndexChanged: function()
-            {
-                switch (this._selectedFlavorIndex)
-                {
-                    case 0:
-                        this.selectedFlavor = "ft-connect-expand-in";
-                        break;
-                    case 1:
-                        this.selectedFlavor = "ft-connect-expand-out";
-                        break;
-                    case 2:
-                        this.selectedFlavor = "ft-connect-tabbed";
-                        break;
-                    case 3:
-                        this.selectedFlavor = "ft-connect-wizard";
-                        break;
-                    default:
-                        throw new Error("Invalid flavor index: " + this._selectedFlavorIndex.toString());
-                }
-            }
-
+            properties: {}
         })
 
     </script>

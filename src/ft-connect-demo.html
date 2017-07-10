@@ -22,6 +22,9 @@ limitations under the License.
 <link rel="import" href="../bower_components/ft-connect-tabbed/ft-connect-tabbed.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="manager-panel.html">
 
@@ -42,6 +45,13 @@ This is a fully-functional sample application that uses all of the components pr
         <style>
             :host {
                 display:block;
+
+                --paper-button-raised-keyboard-focus: {
+                    font-weight: normal;
+                };
+                --paper-button-flat-keyboard-focus: {
+                    font-weight: normal;
+                };
             }
         </style>
 
@@ -65,7 +75,6 @@ This is a fully-functional sample application that uses all of the components pr
             <!-- Manager panel -->
             <manager-panel
                     id="managerPanel"
-                    flavor="{{flavor}}"
                     enabled="{{enabled}}"
                     can-enable="{{canEnable}}"
                     server="{{server}}"
@@ -75,44 +84,104 @@ This is a fully-functional sample application that uses all of the components pr
                     style="border-right:1px solid black;">
             </manager-panel>
 
-            <!-- FileThis Connect panel and dead page -->
-            <iron-pages id="liveOrDeadPages"
-                        style="width:100%; height:100%;"
-                        attr-for-selected="name"
-                        selected="{{_enabledOrDisabledPageName}}">
+            <!-- FileThis Connect panel -->
+            <div
+                    class="layout vertical center"
+                    style="width:100%; height:100%; ">
 
-                <!-- FileThis Connect panel -->
+                <!-- Header -->
                 <div
-                        class="vertical layout center"
-                        name="enabled"
-                        style="width:100%; height:100%; ">
+                        class="layout horizontal center"
+                        style="width:100%; height:55px; border-bottom:1px solid black; ">
 
-                    <iron-pages
-                            style="padding-left:20px; padding-top:100px; padding-right:20px; padding-bottom:20px; "
+                    <!-- Title -->
+                    <div
+                            style="font-family:Arial; font-size:16pt; padding-left:20px; ">
+                        FileThis Connect Component
+                    </div>
+
+                    <!-- Flavors -->
+                    <!--<paper-dropdown-menu label="Flavor" style="width:200px; padding-left:20px; ">-->
+                        <!--<paper-listbox-->
+                                <!--class="dropdown-content"-->
+                                <!--slot="dropdown-content"-->
+                                <!--selected="{{_selectedFlavorIndex}}">-->
+                            <!--<template is="dom-repeat" items="[[flavors]]" as="flavor">-->
+                                <!--<paper-item>[[flavor]]</paper-item>-->
+                            <!--</template>-->
+                        <!--</paper-listbox>-->
+                    <!--</paper-dropdown-menu>-->
+
+                    <!-- Spacer -->
+                    <div class="flex"></div>
+
+                    <!-- Documentation button -->
+                    <ft-labeled-icon-button
+                            style="padding-left:8px; "
+                            icon="info-outline"
+                            label="Docs"
+                            on-tap="_onDocumentationButtonTapped">
+                    </ft-labeled-icon-button>
+
+                    <!-- GitHub repository button -->
+                    <ft-labeled-icon-button
+                            style="padding-left:8px; "
+                            icon="code"
+                            label="Code"
+                            on-tap="_onSourcesButtonTapped">
+                    </ft-labeled-icon-button>
+
+                    <!-- Enabled button -->
+                    <ft-labeled-icon-button
+                            id="enabledButton"
+                            toggles
+                            style="padding-left:30px; padding-right:16px; "
+                            disabled="[[!canEnable]]"
+                            icon="power-settings-new"
+                            label="[[_calculateEnabledButtonLabel(enabled)]]"
+                            pressed="{{enabled}}">
+                    </ft-labeled-icon-button>
+
+                </div>
+
+                <!-- FileThis Connect panel and dead page -->
+                <iron-pages id="liveOrDeadPages"
+                            style="width:100%; height:100%; "
                             attr-for-selected="name"
-                            selected=[[flavor]]>
+                            selected="{{_enabledOrDisabledPageName}}">
+
+                    <!-- Flavor of Connect element -->
+                    <iron-pages
+                            name="enabled"
+                            style="width:100%; padding-left:20px; padding-top:100px; padding-right:20px; padding-bottom:20px; "
+                            attr-for-selected="name"
+                            selected=[[selectedFlavor]]>
 
                         <!-- ft-connect-expand-out -->
-                        <ft-connect-expand-out
+                        <div
+                                class="layout vertical center"
                                 name="ft-connect-expand-out"
-                                enabled="[[enabled]]"
-                                server="[[server]]"
-                                api-path="[[apiPath]]"
-                                user-account-id="[[userAccountId]]"
-                                token="[[token]]"
-                                interaction-version="[[interactionVersion]]"
-                                route="{{route}}"
-                                on-ft-connect-error="_handleFileThisConnectErrorEvent">
-                        </ft-connect-expand-out>
+                                style="width:100%; ">
+
+                            <ft-connect-expand-out
+                                    enabled="[[enabled]]"
+                                    server="[[server]]"
+                                    api-path="[[apiPath]]"
+                                    user-account-id="[[userAccountId]]"
+                                    token="[[token]]"
+                                    interaction-version="[[interactionVersion]]"
+                                    route="{{route}}"
+                                    on-ft-connect-error="_handleFileThisConnectErrorEvent">
+                            </ft-connect-expand-out>
+                        </div>
 
                         <!-- ft-connect-tabbed -->
-                        <div name="ft-connect-tabbed">
-                            ft-connect-tabbed
-                        </div>
-                        <!--<div name="ft-connect-tabbed">-->
+                        <!--<div-->
+                                <!--class="layout vertical center"-->
+                                <!--name="ft-connect-tabbed"-->
+                                <!--style="width:100%; ">-->
+
                             <!--<ft-connect-tabbed-->
-                                    <!--name="ft-connect-tabbed"-->
-                                    <!--style="width:100%; height:100%;"-->
                                     <!--enabled="[[enabled]]"-->
                                     <!--server="[[server]]"-->
                                     <!--api-path="[[apiPath]]"-->
@@ -124,25 +193,20 @@ This is a fully-functional sample application that uses all of the components pr
                             <!--</ft-connect-tabbed>-->
                         <!--</div>-->
 
-                        <!-- ft-connect-mobile -->
-                        <div name="ft-connect-mobile">
-                            ft-connect-mobile
-                        </div>
-
                     </iron-pages>
-                </div>
 
-                <!-- Disabled page -->
-                <div
-                        name="disabled"
-                        class="vertical layout center"
-                        style="width:100%; height:100%">
-                    <div class="flex-1"></div>
-                    <div>Disabled</div>
-                    <div class="flex-2"></div>
-                </div>
+                    <!-- Disabled page -->
+                    <div
+                            name="disabled"
+                            class="layout vertical center"
+                            style="width:100%; ">
+                        <div style="height:200px; "></div>
+                        <div>Click the power button above to turn on</div>
+                    </div>
 
-            </iron-pages>
+                </iron-pages>
+
+            </div>
         </div>
 
         <!-- Confirmation dialog -->
@@ -164,10 +228,30 @@ This is a fully-functional sample application that uses all of the components pr
 
             properties:
             {
-                flavor:
+                selectedFlavor:
                 {
                     type: String,
-                    notify: true
+                    notify: true,
+                    value: "ft-connect-expand-out",
+                    observer: "_onSelectedFlavorChanged"
+                },
+
+                flavors:
+                {
+                    type: Array,
+                    notify: true,
+                    value: [
+                        'ft-connect-expand-out',
+                        'ft-connect-tabbed'
+                    ]
+                },
+
+                _selectedFlavorIndex:
+                {
+                    type: Number,
+                    notify: true,
+                    value: "1",
+                    observer: "_onSelectedFlavorIndexChanged"
                 },
 
                 /** Whether the FileThis Connect instance is enabled or not */
@@ -252,8 +336,8 @@ This is a fully-functional sample application that uses all of the components pr
                 // TODO: Make auto-enable at startup a preference?
                 this.async(function()
                 {
-                    if (this.canEnable)
-                        this.enabled = true;
+//                    if (this.canEnable)
+//                        this.enabled = true;
                 }, 500)
             },
 
@@ -261,6 +345,37 @@ This is a fully-functional sample application that uses all of the components pr
             {
                 var componentName = event.ftComponentName;
                 this._inspect(componentName);
+            },
+
+            _onDocumentationButtonTapped: function(event)
+            {
+                this._openConnectElementDocumentationPage();
+            },
+
+            _onSourcesButtonTapped: function(event)
+            {
+                this._openConnectElementSourcesPage();
+            },
+
+            _openConnectElementDocumentationPage: function(event)
+            {
+                var url = "https://filethis.github.io/" + this.selectedFlavor;
+                this._openUrl(url);
+            },
+
+            _openConnectElementSourcesPage: function(event)
+            {
+                var url = "https://github.com/filethis/" + this.selectedFlavor;
+                this._openUrl(url);
+            },
+
+            _openUrl: function(url)
+            {
+                var win = window.open(url, '_blank');
+                if (win)
+                    win.focus();
+                else
+                    this.$.confirmationDialog.alert("Please allow popups for this site");
             },
 
             _inspect: function(componentName)
@@ -277,6 +392,23 @@ This is a fully-functional sample application that uses all of the components pr
                     this._enabledOrDisabledPageName = "enabled";
                 else
                     this._enabledOrDisabledPageName = "disabled";
+
+                // Be fancy, and let the "enabled" button icons be green when live and red when not
+                var iconColor;
+                if (this.enabled)
+                    iconColor = "limegreen";
+                else
+                    iconColor = "firebrick";
+//                this.$.enabledButton.customStyle['--icon-fill-color'] = iconColor;
+//                this.$.enabledButton.updateStyles();
+            },
+
+            _calculateEnabledButtonLabel: function(enabled)
+            {
+                if (enabled)
+                    return "On";
+                else
+                    return "Off";
             },
 
             _handleFileThisConnectErrorEvent: function(event)
@@ -303,6 +435,52 @@ This is a fully-functional sample application that uses all of the components pr
                 }
 
                 this.handleCaughtError(error);
+            },
+
+            _onSelectedFlavorChanged: function(to, from)
+            {
+                // Update the popup selection
+                this._selectedFlavorIndex = this._mapFlavorToIndex(this.selectedFlavor);
+
+                // TODO: Load code dynamically here?
+            },
+
+            _mapFlavorToIndex: function(flavor)
+            {
+                switch (flavor)
+                {
+                    case "ft-connect-expand-out":
+                        return 0;
+                    case "ft-connect-tabbed":
+                        return 1;
+                    case "ft-connect-wizard":
+                        return 2;
+                    case "ft-connect-expand-in":
+                        return 3;
+                    default:
+                        throw new Error("Unknown FileThis Connect flavor: " + flavor);
+                }
+            },
+
+            _onSelectedFlavorIndexChanged: function()
+            {
+                switch (this._selectedFlavorIndex)
+                {
+                    case 0:
+                        this.selectedFlavor = "ft-connect-expand-out";
+                        break;
+                    case 1:
+                        this.selectedFlavor = "ft-connect-tabbed";
+                        break;
+                    case 2:
+                        this.selectedFlavor = "ft-connect-wizard";
+                        break;
+                    case 3:
+                        this.selectedFlavor = "ft-connect-expand-in";
+                        break;
+                    default:
+                        throw new Error("Invalid flavor index: " + this._selectedFlavorIndex.toString());
+                }
             }
 
         })

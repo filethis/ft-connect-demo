@@ -10,7 +10,6 @@
     "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.8",
     "ft-labeled-icon-button": "filethis/ft-labeled-icon-button#^0.0.5",
     "iron-a11y-keys": "PolymerElements/iron-a11y-keys#1 - 2",
-    "iron-collapse": "PolymerElements/iron-collapse#1 - 2",
     "iron-image": "PolymerElements/iron-image#1 - 2",
     "iron-label": "PolymerElements/iron-label#1 - 2",
     "iron-list": "PolymerElements/iron-list#1 - 2",

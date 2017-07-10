@@ -17,7 +17,6 @@ limitations under the License.
 
 <link rel="import" href="../bower_components/ft-labeled-icon-button/ft-labeled-icon-button.html">
 <link rel="import" href="../bower_components/ft-test-account-manager/ft-test-account-manager.html">
-<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
@@ -49,185 +48,121 @@ limitations under the License.
             }
         </style>
 
-        <!-- Manager panel -->
-        <div class="layout vertical end"
-                    style="height:100%;">
+        <iron-pages
+                id="expandedOrCollapsed"
+                style="width:100%; height:100%"
+                attr-for-selected="name"
+                selected="[[_managerState]]">
 
-            <!-- Manager panel Tabs and show/hide arrow button-->
-            <div class="layout horizontal center"
-                 style="width:100%; height:55px; border-bottom:1px solid #DDD;">
+            <!-- Expanded -->
+            <div
+                    class="layout vertical end"
+                    style="height:100%;"
+                    name="expanded">
 
-                <!-- Manager panel Tabs -->
-                <iron-collapse
-                        id="collapse"
-                        horizontal="true"
-                        opened="[[managerIsOpen]]">
-                    <paper-tabs
-                            id="managerPanelTabs"
-                            attr-for-selected="name"
-                            selected="{{_selectedManagerPanelTabName}}"
-                            hidden$="[[!managerIsOpen]]"
-                            on-iron-select="_onPanelSelected"
-                            style="font-size:14pt;">
-                        <paper-tab name="start">Start</paper-tab>
-                        <paper-tab name="config">Config</paper-tab>
-                        <paper-tab name="inspect">Inspect</paper-tab>
-                        <!--<paper-tab name="styling">Styling</paper-tab>-->
-                        <paper-tab name="token">Token</paper-tab>
-                    </paper-tabs>
-                </iron-collapse>
+                <!-- Manager panel Tabs and show/hide arrow button-->
+                <div
+                        class="layout horizontal center"
+                        style="width:100%; height:55px; border-bottom:1px solid #DDD; ">
 
-                <!-- Spacer -->
-                <div class="flex"></div>
+                    <!-- Manager panel Tabs -->
+                    <!--<paper-tabs-->
+                            <!--id="managerPanelTabs"-->
+                            <!--attr-for-selected="name"-->
+                            <!--selected="{{_selectedManagerPanelTabName}}"-->
+                            <!--on-iron-select="_onPanelSelected"-->
+                            <!--style="font-size:14pt;">-->
+                        <!--&lt;!&ndash;<paper-tab name="start">Start</paper-tab>&ndash;&gt;-->
+                        <!--<paper-tab name="config">Config</paper-tab>-->
+                        <!--&lt;!&ndash;<paper-tab name="inspect">Inspect</paper-tab>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<paper-tab name="styling">Styling</paper-tab>&ndash;&gt;-->
+                        <!--<paper-tab name="token">Token</paper-tab>-->
+                    <!--</paper-tabs>-->
 
-                <!-- Enabled button - shown when panel is expanded -->
-                <ft-labeled-icon-button
-                        id="expandedEnabledButton"
-                        toggles
-                        disabled="[[!canEnable]]"
-                        icon="power-settings-new"
-                        label="[[_calculateEnabledButtonLabel(enabled)]]"
-                        hidden$="[[!managerIsOpen]]"
-                        pressed="{{enabled}}">
-                </ft-labeled-icon-button>
+                    <!-- Title -->
+                    <div
+                            style="font-family:Arial; font-size:16pt; padding-left:20px; ">
+                        Settings
+                    </div>
 
-                <!-- Spacer -->
-                <div style="width:15px;" hidden$="[[!managerIsOpen]]"></div>
+                    <!-- Spacer -->
+                    <div class="flex"></div>
 
-                <!-- Expand/collapse button panel -->
-                <div class="layout vertical center">
+                    <!-- Spacer -->
+                    <div style="width:15px;"></div>
 
                     <!-- Expand/collapse button -->
-                    <!--<paper-icon-button-->
-                            <!--id="expandCollapseButton"-->
-                            <!--icon="[[_calculateManagerIcon(managerIsOpen)]]"-->
-                            <!--on-tap="_onExpandCollapseButtonClicked">-->
-                    <!--</paper-icon-button>-->
-
-                    <!-- Enabled button - shown when panel is collapsed -->
-                    <ft-labeled-icon-button
-                            id="collapsedEnabledButton"
-                            toggles
-                            disabled="[[!canEnable]]"
-                            style="margin-top:20px;"
-                            label="[[_calculateEnabledButtonLabel(enabled)]]"
-                            icon="power-settings-new"
-                            hidden$="[[managerIsOpen]]"
-                            pressed="{{enabled}}">
-                    </ft-labeled-icon-button>
-
-                    <!-- Refresh button -->
-                    <!--<ft-labeled-icon-button-->
-                            <!--label="Refresh"-->
-                            <!--style="margin-top:16px;"-->
-                            <!--icon="refresh"-->
-                            <!--hidden$="[[managerIsOpen]]">-->
-                    <!--</ft-labeled-icon-button>-->
+                    <paper-icon-button
+                            id="collapseButton"
+                            icon="arrow-back"
+                            on-tap="_onExpandCollapseButtonClicked">
+                    </paper-icon-button>
 
                 </div>
 
-            </div>
+                <!-- Manager panels -->
+                <iron-pages id="panels"
+                            attr-for-selected="name"
+                            style="width:100%; height:100%"
+                            selected="{{_selectedManagerPanelTabName}}">
 
-
-            <!-- Manager panels -->
-            <iron-pages id="panels"
-                        attr-for-selected="name"
-                        style="width:100%; height:100%"
-                        selected="{{_selectedManagerPanelTabName}}">
-
-                <!-- Start manager panel -->
-                <start-panel name="start">
-                </start-panel>
-
-                <!-- Config manager panel -->
-                <config-panel
-                        name="config"
-                        selected-flavor="{{flavor}}">
-                </config-panel>
-
-                <!-- Styling manager panel -->
-                <!--<div name="styling">-->
-                    <!--Styling-->
-                <!--</div>-->
-
-                <!-- Inspect manager panel -->
-                <inspect-panel
-                        name="inspect"
-                        component-name="{{componentName}}">
-                </inspect-panel>
-
-                <!-- Test account manager panel -->
-                <div class="layout vertical center"
-                     name="token"
-                     style="width:100%;">
-
-                    <!-- Test account manager -->
-                    <ft-test-account-manager
-                            id="testAccountManager"
-                            enabled="{{enabled}}"
-                            can-enable="{{canEnable}}"
-                            server="{{server}}"
-                            api-path="{{apiPath}}"
-                            user-account-id="{{userAccountId}}"
-                            token="{{token}}">
-                    </ft-test-account-manager>
-                </div>
-            </iron-pages>
-
-            <!--&lt;!&ndash; Collapsing panel &ndash;&gt;-->
-            <!--<iron-collapse-->
-                    <!--id="collapse"-->
-                    <!--horizontal="true"-->
-                    <!--style="width:100%"-->
-                    <!--opened="[[managerIsOpen]]">-->
-                <!---->
-                <!--&lt;!&ndash; Manager panels &ndash;&gt;-->
-                <!--<iron-pages id="panels"-->
-                            <!--attr-for-selected="name"-->
-                            <!--style="width:100%; height:100%"-->
-                            <!--selected="{{_selectedManagerPanelTabName}}">-->
-
-                    <!--&lt;!&ndash; Start manager panel &ndash;&gt;-->
+                    <!-- Start manager panel -->
                     <!--<start-panel name="start">-->
                     <!--</start-panel>-->
 
-                    <!--&lt;!&ndash; Config manager panel &ndash;&gt;-->
-                    <!--<config-panel-->
-                            <!--name="config"-->
-                            <!--selected-flavor="{{flavor}}">-->
-                    <!--</config-panel>-->
+                    <!-- Config manager panel -->
+                    <config-panel
+                            name="config">
+                    </config-panel>
 
-                    <!--&lt;!&ndash; Styling manager panel &ndash;&gt;-->
-                    <!--&lt;!&ndash;<div name="styling">&ndash;&gt;-->
-                        <!--&lt;!&ndash;Styling&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!-- Styling manager panel -->
+                    <!--<div name="styling">-->
+                        <!--Styling-->
+                    <!--</div>-->
 
-                    <!--&lt;!&ndash; Inspect manager panel &ndash;&gt;-->
+                    <!-- Inspect manager panel -->
                     <!--<inspect-panel-->
                             <!--name="inspect"-->
                             <!--component-name="{{componentName}}">-->
                     <!--</inspect-panel>-->
 
-                    <!--&lt;!&ndash; Test account manager panel &ndash;&gt;-->
-                    <!--<div class="layout vertical center"-->
-                         <!--name="token"-->
-                         <!--style="width:100%;">-->
+                    <!-- Test account manager panel -->
+                    <div class="layout vertical center"
+                         name="token"
+                         style="width:100%; height:100%; ">
 
-                        <!--&lt;!&ndash; Test account manager &ndash;&gt;-->
-                        <!--<ft-test-account-manager-->
-                                <!--id="testAccountManager"-->
-                                <!--enabled="{{enabled}}"-->
-                                <!--can-enable="{{canEnable}}"-->
-                                <!--server="{{server}}"-->
-                                <!--api-path="{{apiPath}}"-->
-                                <!--user-account-id="{{userAccountId}}"-->
-                                <!--token="{{token}}">-->
-                        <!--</ft-test-account-manager>-->
-                    <!--</div>-->
-                <!--</iron-pages>-->
-            <!--</iron-collapse>-->
+                        <!-- Test account manager -->
+                        <ft-test-account-manager
+                                id="testAccountManager"
+                                style="height:100%; "
+                                enabled="{{enabled}}"
+                                can-enable="{{canEnable}}"
+                                server="{{server}}"
+                                show-server="false"
+                                api-path="{{apiPath}}"
+                                user-account-id="{{userAccountId}}"
+                                token="{{token}}">
+                        </ft-test-account-manager>
+                    </div>
+                </iron-pages>
 
-        </div>
+            </div>
+
+            <!-- Collapsed -->
+            <div
+                    class="layout vertical center"
+                    name="collapsed">
+                
+                <!-- Expand button -->
+                <paper-icon-button
+                        id="expandButton"
+                        icon="arrow-forward"
+                        on-tap="_onExpandCollapseButtonClicked">
+                </paper-icon-button>
+            </div>
+
+        </iron-pages>
+
 
     </template>
 
@@ -238,19 +173,12 @@ limitations under the License.
 
             properties:
             {
-                flavor:
-                {
-                    type: String,
-                    notify: true
-                },
-
                 /** Whether the FileThis Connect instance is enabled or not */
                 enabled:
                 {
                     type: Boolean,
                     notify: true,
-                    value: false,
-                    observer: "_enabledChanged"
+                    value: false
                 },
 
                 /** Whether the FileThis Connect instance can be enabled or not */
@@ -291,13 +219,19 @@ limitations under the License.
                     value: ""
                 },
 
-                /** Whether the manager panel is open or not. */
-                managerIsOpen:
+                /** Whether the manager panel is expanded or not. */
+                managerIsExpanded:
                 {
                     type: Boolean,
                     notify: true,
                     value: "false",
-                    observer: "_managerIsOpenChanged"
+                    observer: "_managerIsExpandedChanged"
+                },
+
+                _managerState:
+                {
+                    type: String,
+                    value: "expanded"
                 },
 
                 componentName:
@@ -321,51 +255,17 @@ limitations under the License.
             {
                 this.async(function()
                 {
-                    this.managerIsOpen = this._readFromLocalStorageBoolean("managerIsOpen", true);
+                    this.managerIsExpanded = this._readFromLocalStorageBoolean("managerIsExpanded", true);
                     this._selectedManagerPanelTabName = this._readFromLocalStorage("selectedManagerPanelTabName", "start");
                 });
             },
 
-            _calculateManagerIcon: function(isOpen)
+            _managerIsExpandedChanged: function()
             {
-                if (isOpen)
-                    return "arrow-back";
+                if (this.managerIsExpanded)
+                    this._managerState = "expanded";
                 else
-                    return "arrow-forward";
-            },
-
-            _calculateEnabledButtonLabel: function(enabled)
-            {
-                if (enabled)
-                    return "On";
-                else
-                    return "Off";
-            },
-
-            _enabledChanged: function()
-            {
-                // Be fancy, and let the "enabled" button icons be green when live and red when not
-                var iconColor;
-                if (this.enabled)
-                    iconColor = "limegreen";
-                else
-                    iconColor = "firebrick";
-                var icon = this.$.icon;
-//                this.$.expandedEnabledButton.customStyle['--iron-icon-fill-color'] = iconColor;
-//                this.$.expandedEnabledButton.updateStyles();
-//                this.$.collapsedEnabledButton.customStyle['--iron-icon-fill-color'] = iconColor;
-//                this.$.collapsedEnabledButton.updateStyles();
-            },
-            
-            _managerIsOpenChanged: function()
-            {
-//                // TODO: Find out how to get rid of this fugly workaround
-//                var hack;
-//                if (this.managerIsOpen)
-//                    hack = "0";
-//                else
-//                    hack = "60px";
-//                this.$.expandCollapseButton.style.marginTop = hack;
+                    this._managerState = "collapsed";
             },
 
 
@@ -373,8 +273,8 @@ limitations under the License.
 
             _onExpandCollapseButtonClicked: function()
             {
-                this.managerIsOpen = !this.managerIsOpen;
-                localStorage.setItem("managerIsOpen", JSON.stringify(this.managerIsOpen));
+                this.managerIsExpanded = !this.managerIsExpanded;
+                localStorage.setItem("managerIsExpanded", JSON.stringify(this.managerIsExpanded));
             },
 
             _onPanelSelected: function()
