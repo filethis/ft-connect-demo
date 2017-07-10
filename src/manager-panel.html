@@ -135,8 +135,8 @@ limitations under the License.
                         <ft-test-account-manager
                                 id="testAccountManager"
                                 style="height:100%; "
-                                enabled="{{enabled}}"
-                                can-enable="{{canEnable}}"
+                                live="{{live}}"
+                                can-go-live="{{canGoLive}}"
                                 server="{{server}}"
                                 show-server="false"
                                 api-path="{{apiPath}}"
@@ -173,16 +173,16 @@ limitations under the License.
 
             properties:
             {
-                /** Whether the FileThis Connect instance is enabled or not */
-                enabled:
+                /** Whether the FileThis Connect instance is live or not */
+                live:
                 {
                     type: Boolean,
                     notify: true,
                     value: false
                 },
 
-                /** Whether the FileThis Connect instance can be enabled or not */
-                canEnable:
+                /** Whether the FileThis Connect instance can be live or not */
+                canGoLive:
                 {
                     type: Boolean,
                     notify: true,

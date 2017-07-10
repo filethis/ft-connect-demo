@@ -75,8 +75,8 @@ This is a fully-functional sample application that uses all of the components pr
             <!-- Manager panel -->
             <manager-panel
                     id="managerPanel"
-                    enabled="{{enabled}}"
-                    can-enable="{{canEnable}}"
+                    live="{{live}}"
+                    can-go-live="{{canGoLive}}"
                     server="{{server}}"
                     user-account-id="{{userAccountId}}"
                     token="{{token}}"
@@ -136,10 +136,10 @@ This is a fully-functional sample application that uses all of the components pr
                             id="enabledButton"
                             toggles
                             style="padding-left:30px; padding-right:16px; "
-                            disabled="[[!canEnable]]"
+                            disabled="[[!canGoLive]]"
                             icon="power-settings-new"
-                            label="[[_calculateEnabledButtonLabel(enabled)]]"
-                            pressed="{{enabled}}">
+                            label="[[_calculateEnabledButtonLabel(live)]]"
+                            pressed="{{live}}">
                     </ft-labeled-icon-button>
 
                 </div>
@@ -152,7 +152,7 @@ This is a fully-functional sample application that uses all of the components pr
 
                     <!-- Flavor of Connect element -->
                     <iron-pages
-                            name="enabled"
+                            name="live"
                             style="width:100%; padding-left:20px; padding-top:100px; padding-right:20px; padding-bottom:20px; "
                             attr-for-selected="name"
                             selected=[[selectedFlavor]]>
@@ -164,7 +164,7 @@ This is a fully-functional sample application that uses all of the components pr
                                 style="width:100%; ">
 
                             <ft-connect-expand-out
-                                    enabled="[[enabled]]"
+                                    live="[[live]]"
                                     server="[[server]]"
                                     api-path="[[apiPath]]"
                                     user-account-id="[[userAccountId]]"
@@ -182,7 +182,7 @@ This is a fully-functional sample application that uses all of the components pr
                                 <!--style="width:100%; ">-->
 
                             <!--<ft-connect-tabbed-->
-                                    <!--enabled="[[enabled]]"-->
+                                    <!--live="[[live]]"-->
                                     <!--server="[[server]]"-->
                                     <!--api-path="[[apiPath]]"-->
                                     <!--user-account-id="[[userAccountId]]"-->
@@ -197,7 +197,7 @@ This is a fully-functional sample application that uses all of the components pr
 
                     <!-- Disabled page -->
                     <div
-                            name="disabled"
+                            name="dead"
                             class="layout vertical center"
                             style="width:100%; ">
                         <div style="height:200px; "></div>
@@ -254,17 +254,17 @@ This is a fully-functional sample application that uses all of the components pr
                     observer: "_onSelectedFlavorIndexChanged"
                 },
 
-                /** Whether the FileThis Connect instance is enabled or not */
-                enabled:
+                /** Whether the FileThis Connect instance is live or not */
+                live:
                 {
                     type: Boolean,
                     notify: true,
                     value: false,
-                    observer: "_onEnabledChanged"
+                    observer: "_onLiveChanged"
                 },
 
-                /** Whether the FileThis Connect instance can be enabled or not */
-                canEnable:
+                /** Whether the FileThis Connect instance can be live or not */
+                canGoLive:
                 {
                     type: Boolean,
                     notify: true,
@@ -319,10 +319,10 @@ This is a fully-functional sample application that uses all of the components pr
                     value: true
                 },
 
-                _enabledOrDisabledPageName:
+                _liveOrDeadPageName:
                 {
                     type: String,
-                    value: "disabled"
+                    value: "dead"
                 },
 
                 _suppressWriteToLocalStorage: {
@@ -336,8 +336,8 @@ This is a fully-functional sample application that uses all of the components pr
                 // TODO: Make auto-enable at startup a preference?
                 this.async(function()
                 {
-//                    if (this.canEnable)
-//                        this.enabled = true;
+//                    if (this.canGoLive)
+//                        this.live = true;
                 }, 500)
             },
 
@@ -386,16 +386,16 @@ This is a fully-functional sample application that uses all of the components pr
                     this.componentName = null;
             },
 
-            _onEnabledChanged: function(to, from)
+            _onLiveChanged: function(to, from)
             {
-                if (this.enabled)
-                    this._enabledOrDisabledPageName = "enabled";
+                if (this.live)
+                    this._liveOrDeadPageName = "live";
                 else
-                    this._enabledOrDisabledPageName = "disabled";
+                    this._liveOrDeadPageName = "dead";
 
-                // Be fancy, and let the "enabled" button icons be green when live and red when not
+                // Be fancy, and let the "live" button icons be green when live and red when not
                 var iconColor;
-                if (this.enabled)
+                if (this.live)
                     iconColor = "limegreen";
                 else
                     iconColor = "firebrick";
@@ -403,9 +403,9 @@ This is a fully-functional sample application that uses all of the components pr
 //                this.$.enabledButton.updateStyles();
             },
 
-            _calculateEnabledButtonLabel: function(enabled)
+            _calculateEnabledButtonLabel: function(live)
             {
-                if (enabled)
+                if (live)
                     return "On";
                 else
                     return "Off";
@@ -413,7 +413,7 @@ This is a fully-functional sample application that uses all of the components pr
 
             _handleFileThisConnectErrorEvent: function(event)
             {
-                this.enabled = false;
+                this.live = false;
 
                 var error = event.detail;
 
