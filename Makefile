@@ -1,6 +1,6 @@
 # Project configuration
 NAME=ft-connect-demo
-VERSION=0.0.6
+VERSION=0.0.7
 LOCAL_PORT=3456
 GITHUB_USER=filethis
 BOWER_NAMESPACE=FileThis
