@@ -247,6 +247,8 @@ limitations under the License.
                     value: "token"
                 }
             },
+
+            _defaultPanelName: "token",  // Make sure this panel really exists
             
             
             // Startup -------------------------------------------------------------------------------------
@@ -256,7 +258,14 @@ limitations under the License.
                 this.async(function()
                 {
                     this.managerIsExpanded = this._readFromLocalStorageBoolean("managerIsExpanded", true);
-                    this._selectedManagerPanelTabName = this._readFromLocalStorage("selectedManagerPanelTabName", "token");
+
+                    // We have to be careful here to make sure that removed panels whose names have been stored
+                    // by a client get mapped to an actual panel.
+                    var panelName = this._readFromLocalStorage("selectedManagerPanelTabName", this._defaultPanelName);
+                    if (!this._isValidPanelName(panelName))
+                        panelName = this._defaultPanelName;
+
+                    this._selectedManagerPanelTabName = panelName;
                 });
             },
 
@@ -280,6 +289,16 @@ limitations under the License.
             _onPanelSelected: function()
             {
                 localStorage.setItem("selectedManagerPanelTabName", this._selectedManagerPanelTabName);
+            },
+
+            _isValidPanelName: function(panelName)
+            {
+                switch (panelName)
+                {
+                    case "token":
+                        return true;
+                }
+                return false;
             },
 
 
