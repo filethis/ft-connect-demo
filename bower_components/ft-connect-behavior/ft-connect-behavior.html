@@ -152,6 +152,14 @@ limitations under the License.
                 value: true
             },
 
+            /** When set "true", various debugging options are enabled. */
+            debug:
+            {
+                type: Object,
+                value: "false",
+                notify: true
+            },
+
             _uploadableFileTypes:
             {
                 type: String,
@@ -648,6 +656,8 @@ limitations under the License.
             return this.httpGet(url, options)
                 .then(function(sources)
                 {
+                    if (this.debug && this.selectedFilterId === "all")
+                        this._prependFakeSource(sources);
                     this.sources = sources;
                     return sources;
                 }.bind(this));
@@ -1497,6 +1507,32 @@ limitations under the License.
                     "X-FileThis-Session": this.token
                 }
             };
+        },
+
+
+        // Miscellaneous
+
+        _prependFakeSource: function(sources)
+        {
+            var fakeSource =
+            {
+                "id": 100100,
+                "name": "Test Site",
+                "type": "util",
+                "state": "live",
+                "homePageUrl": "https://fake-company-site.herokuapp.com",
+                "phone": "(800) 555-5555",
+                "logoPath": "logos/Logo_FakeBank.png",
+                "logo": "Logo_FakeBank.png",
+                "logoUrl": "https://filethis.com/static/logos/72/logos/Logo_FakeBank.png",
+                "note": "",
+                "info": "",
+                "pattern": "",
+                "isNew": false,
+                "isPopular": false
+            };
+
+            sources.unshift(fakeSource);
         },
 
         _handleError: function(error)
