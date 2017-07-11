@@ -92,8 +92,9 @@ limitations under the License.
                     <!--</start-panel>-->
 
                     <!-- Config manager panel -->
-                    <config-panel name="config">
-                    </config-panel>
+                    <!--<config-panel-->
+                            <!--name="config">-->
+                    <!--</config-panel>-->
 
                     <!-- Styling manager panel -->
                     <!--<div name="styling">-->
@@ -220,7 +221,7 @@ limitations under the License.
                 this.async(function()
                 {
                     this.managerIsExpanded = this._readFromLocalStorageBoolean("managerIsExpanded", true);
-                    this._selectedManagerPanelTabName = this._readFromLocalStorage("selectedManagerPanelTabName", "start");
+                    this._selectedManagerPanelTabName = this._readFromLocalStorage("selectedManagerPanelTabName", "token");
                 });
             },
 
