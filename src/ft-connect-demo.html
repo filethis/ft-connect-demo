@@ -108,49 +108,39 @@ This is a fully-functional sample application that uses all of the components pr
                 </div>
 
                 <!-- Live or dead pages -->
-                <iron-pages id="liveOrDeadPages" style="width:100%; height:100%; " attr-for-selected="name" selected="{{_liveOrDeadPageName}}">
+                <!-- Have to put iron-pages inside a div, or it will take too much vertical space... Bug? -->
+                <div class="layout vertical" style="width:100%; height:100%; ">
 
-                    <!-- Flavor of Connect element -->
-                    <iron-pages name="live" style="width:100%; padding-left:20px; padding-top:100px; padding-right:20px; padding-bottom:20px; " attr-for-selected="name" selected="[[selectedFlavor]]">
+                    <iron-pages id="liveOrDeadPages" style="width:100%; height:100%; " attr-for-selected="name" selected="{{_liveOrDeadPageName}}">
 
-                        <!-- ft-connect-expand-out -->
-                        <div class="layout vertical center" name="ft-connect-expand-out" style="width:100%; ">
+                        <div class="layout vertical center" name="live" style="width:100%; height:100%; ">
 
-                            <ft-connect-expand-out live="[[live]]" server="[[server]]" api-path="[[apiPath]]" user-account-id="[[userAccountId]]" token="[[token]]" interaction-version="[[interactionVersion]]" route="{{route}}" debug="true" on-ft-connect-error="_handleFileThisConnectErrorEvent">
-                            </ft-connect-expand-out>
+                            <div style="height:100px; "></div>
+
+                            <!-- ft-connect-expand-out -->
+                            <template is="dom-if" if="[[_flavorExpandOut]]" restamp="true">
+                                <ft-connect-expand-out live="[[live]]" server="[[server]]" api-path="[[apiPath]]" user-account-id="[[userAccountId]]" token="[[token]]" interaction-version="[[interactionVersion]]" route="{{route}}" debug="true" on-ft-connect-error="_handleFileThisConnectErrorEvent">
+                                </ft-connect-expand-out>
+                            </template>
+
+                            <!-- ft-connect-tabbed -->
+                            <template is="dom-if" if="[[_flavorTabbed]]" restamp="true">
+                                <ft-connect-tabbed style="width:780px; height:450px; " live="[[live]]" server="[[server]]" api-path="[[apiPath]]" user-account-id="[[userAccountId]]" token="[[token]]" interaction-version="[[interactionVersion]]" route="{{route}}" debug="true" on-ft-connect-error="_handleFileThisConnectErrorEvent">
+                                </ft-connect-tabbed>
+                            </template>
+
                         </div>
 
-                        <!-- ft-connect-tabbed -->
-                        <!--<div-->
-                                <!--class="layout vertical center"-->
-                                <!--name="ft-connect-tabbed"-->
-                                <!--style="width:100%; ">-->
-
-                            <!--<ft-connect-tabbed-->
-                                    <!--live="[[live]]"-->
-                                    <!--server="[[server]]"-->
-                                    <!--api-path="[[apiPath]]"-->
-                                    <!--user-account-id="[[userAccountId]]"-->
-                                    <!--token="[[token]]"-->
-                                    <!--interaction-version="[[interactionVersion]]"-->
-                                    <!--route="{{route}}"-->
-                                    <!--debug="true"-->
-                                    <!--on-ft-connect-error="_handleFileThisConnectErrorEvent">-->
-                            <!--</ft-connect-tabbed>-->
-                        <!--</div>-->
+                        <!-- Disabled page -->
+                        <div name="dead" class="layout vertical center" style="width:100%; ">
+                            <div style="height:200px; "></div>
+                            <div>Click the power button in the upper right corner</div>
+                            <div>to inject the user access token into the component</div>
+                            <div>and tell it connect to the FileThis services.</div>
+                        </div>
 
                     </iron-pages>
-
-                    <!-- Disabled page -->
-                    <div name="dead" class="layout vertical center" style="width:100%; ">
-                        <div style="height:200px; "></div>
-                        <div>Click the power button in the upper right corner</div>
-                        <div>to inject the user access token into the component</div>
-                        <div>and tell it connect to the FileThis services.</div>
-                    </div>
-
-                </iron-pages>
-
+                </div>
             </div>
         </div>
 
@@ -186,7 +176,8 @@ This is a fully-functional sample application that uses all of the components pr
                     type: Array,
                     notify: true,
                     value: [
-                        'ft-connect-expand-out'
+                        'ft-connect-expand-out',
+                        'ft-connect-tabbed'
                     ]
                 },
 
@@ -272,6 +263,26 @@ This is a fully-functional sample application that uses all of the components pr
                 _suppressWriteToLocalStorage: {
                     type: Boolean,
                     value: true
+                },
+
+                _flavorExpandOut: {
+                    type: Boolean,
+                    value: false
+                },
+
+                _flavorTabbed: {
+                    type: Boolean,
+                    value: false
+                },
+
+                _flavorWizard: {
+                    type: Boolean,
+                    value: false
+                },
+
+                _flavorExpandIn: {
+                    type: Boolean,
+                    value: false
                 }
             },
 
@@ -387,7 +398,28 @@ This is a fully-functional sample application that uses all of the components pr
                 // Update the popup selection
                 this._selectedFlavorIndex = this._mapFlavorToIndex(this.selectedFlavor);
 
-                // TODO: Load code dynamically here?
+                this._flavorExpandOut = false;
+                this._flavorTabbed = false;
+                this._flavorWizard = false;
+                this._flavorExpandIn = false;
+
+                switch (this.selectedFlavor)
+                {
+                    case "ft-connect-expand-out":
+                        this._flavorExpandOut = true;
+                        break;
+                    case "ft-connect-tabbed":
+                        this._flavorTabbed = true;
+                        break;
+                    case "ft-connect-wizard":
+                        this._flavorWizard = true;
+                        break;
+                    case "ft-connect-expand-in":
+                        this._flavorExpandIn = true;
+                        break;
+                    default:
+                        throw new Error("Unknown FileThis Connect flavor: " + flavor);
+                }
             },
 
             _mapFlavorToIndex: function(flavor)
