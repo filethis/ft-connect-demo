@@ -56,28 +56,14 @@ limitations under the License.
 
             <!-- Expanded -->
             <div
-                    class="layout vertical end"
-                    style="height:100%;"
+                    class="layout vertical start"
+                    style="height:100%; "
                     name="expanded">
 
-                <!-- Manager panel Tabs and show/hide arrow button-->
+                <!-- Title and show/hide arrow button-->
                 <div
                         class="layout horizontal center"
                         style="width:100%; height:55px; border-bottom:1px solid #DDD; ">
-
-                    <!-- Manager panel Tabs -->
-                    <!--<paper-tabs-->
-                            <!--id="managerPanelTabs"-->
-                            <!--attr-for-selected="name"-->
-                            <!--selected="{{_selectedManagerPanelTabName}}"-->
-                            <!--on-iron-select="_onPanelSelected"-->
-                            <!--style="font-size:14pt;">-->
-                        <!--&lt;!&ndash;<paper-tab name="start">Start</paper-tab>&ndash;&gt;-->
-                        <!--<paper-tab name="config">Config</paper-tab>-->
-                        <!--&lt;!&ndash;<paper-tab name="inspect">Inspect</paper-tab>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<paper-tab name="styling">Styling</paper-tab>&ndash;&gt;-->
-                        <!--<paper-tab name="token">Token</paper-tab>-->
-                    <!--</paper-tabs>-->
 
                     <!-- Title -->
                     <div
@@ -100,10 +86,24 @@ limitations under the License.
 
                 </div>
 
+                <!-- Manager panel Tabs -->
+                <paper-tabs
+                        id="managerPanelTabs"
+                        attr-for-selected="name"
+                        selected="{{_selectedManagerPanelTabName}}"
+                        on-iron-select="_onPanelSelected"
+                        style="font-size:14pt; ">
+                    <!--<paper-tab name="start">Start</paper-tab>-->
+                    <paper-tab name="token">Token</paper-tab>
+                    <paper-tab name="config">Config</paper-tab>
+                    <!--<paper-tab name="inspect">Inspect</paper-tab>-->
+                    <!--<paper-tab name="styling">Styling</paper-tab>-->
+                </paper-tabs>
+
                 <!-- Manager panels -->
                 <iron-pages id="panels"
                             attr-for-selected="name"
-                            style="width:100%; height:100%"
+                            style="width:100%; height:100%; border-top:1px solid #DDD; "
                             selected="{{_selectedManagerPanelTabName}}">
 
                     <!-- Start manager panel -->
@@ -111,20 +111,9 @@ limitations under the License.
                     <!--</start-panel>-->
 
                     <!-- Config manager panel -->
-                    <!--<config-panel-->
-                            <!--name="config">-->
-                    <!--</config-panel>-->
-
-                    <!-- Styling manager panel -->
-                    <!--<div name="styling">-->
-                        <!--Styling-->
-                    <!--</div>-->
-
-                    <!-- Inspect manager panel -->
-                    <!--<inspect-panel-->
-                            <!--name="inspect"-->
-                            <!--component-name="{{componentName}}">-->
-                    <!--</inspect-panel>-->
+                    <config-panel
+                            name="config">
+                    </config-panel>
 
                     <!-- Test account manager panel -->
                     <div class="layout vertical center"
@@ -144,6 +133,17 @@ limitations under the License.
                                 token="{{token}}">
                         </ft-test-account-manager>
                     </div>
+                    <!-- Styling manager panel -->
+                    <!--<div name="styling">-->
+                        <!--Styling-->
+                    <!--</div>-->
+
+                    <!-- Inspect manager panel -->
+                    <!--<inspect-panel-->
+                            <!--name="inspect"-->
+                            <!--component-name="{{componentName}}">-->
+                    <!--</inspect-panel>-->
+
                 </iron-pages>
 
             </div>
