@@ -48,24 +48,10 @@ limitations under the License.
         <iron-pages id="expandedOrCollapsed" style="width:100%; height:100%" attr-for-selected="name" selected="[[_managerState]]">
 
             <!-- Expanded -->
-            <div class="layout vertical end" style="height:100%;" name="expanded">
+            <div class="layout vertical start" style="height:100%; " name="expanded">
 
-                <!-- Manager panel Tabs and show/hide arrow button-->
+                <!-- Title and show/hide arrow button-->
                 <div class="layout horizontal center" style="width:100%; height:55px; border-bottom:1px solid #DDD; ">
-
-                    <!-- Manager panel Tabs -->
-                    <!--<paper-tabs-->
-                            <!--id="managerPanelTabs"-->
-                            <!--attr-for-selected="name"-->
-                            <!--selected="{{_selectedManagerPanelTabName}}"-->
-                            <!--on-iron-select="_onPanelSelected"-->
-                            <!--style="font-size:14pt;">-->
-                        <!--&lt;!&ndash;<paper-tab name="start">Start</paper-tab>&ndash;&gt;-->
-                        <!--<paper-tab name="config">Config</paper-tab>-->
-                        <!--&lt;!&ndash;<paper-tab name="inspect">Inspect</paper-tab>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<paper-tab name="styling">Styling</paper-tab>&ndash;&gt;-->
-                        <!--<paper-tab name="token">Token</paper-tab>-->
-                    <!--</paper-tabs>-->
 
                     <!-- Title -->
                     <div style="font-family:Arial; font-size:16pt; padding-left:20px; ">
@@ -84,18 +70,33 @@ limitations under the License.
 
                 </div>
 
+                <!-- Manager panel Tabs -->
+                <paper-tabs id="managerPanelTabs" attr-for-selected="name" selected="{{_selectedManagerPanelTabName}}" on-iron-select="_onPanelSelected" style="font-size:14pt; ">
+                    <!--<paper-tab name="start">Start</paper-tab>-->
+                    <paper-tab name="token">Token</paper-tab>
+                    <paper-tab name="config">Config</paper-tab>
+                    <!--<paper-tab name="inspect">Inspect</paper-tab>-->
+                    <!--<paper-tab name="styling">Styling</paper-tab>-->
+                </paper-tabs>
+
                 <!-- Manager panels -->
-                <iron-pages id="panels" attr-for-selected="name" style="width:100%; height:100%" selected="{{_selectedManagerPanelTabName}}">
+                <iron-pages id="panels" attr-for-selected="name" style="width:100%; height:100%; border-top:1px solid #DDD; " selected="{{_selectedManagerPanelTabName}}">
 
                     <!-- Start manager panel -->
                     <!--<start-panel name="start">-->
                     <!--</start-panel>-->
 
                     <!-- Config manager panel -->
-                    <!--<config-panel-->
-                            <!--name="config">-->
-                    <!--</config-panel>-->
+                    <config-panel name="config">
+                    </config-panel>
 
+                    <!-- Test account manager panel -->
+                    <div class="layout vertical center" name="token" style="width:100%; height:100%; ">
+
+                        <!-- Test account manager -->
+                        <ft-test-account-manager id="testAccountManager" style="height:100%; " live="{{live}}" can-go-live="{{canGoLive}}" server="{{server}}" show-server="false" api-path="{{apiPath}}" user-account-id="{{userAccountId}}" token="{{token}}">
+                        </ft-test-account-manager>
+                    </div>
                     <!-- Styling manager panel -->
                     <!--<div name="styling">-->
                         <!--Styling-->
@@ -107,13 +108,6 @@ limitations under the License.
                             <!--component-name="{{componentName}}">-->
                     <!--</inspect-panel>-->
 
-                    <!-- Test account manager panel -->
-                    <div class="layout vertical center" name="token" style="width:100%; height:100%; ">
-
-                        <!-- Test account manager -->
-                        <ft-test-account-manager id="testAccountManager" style="height:100%; " live="{{live}}" can-go-live="{{canGoLive}}" server="{{server}}" show-server="false" api-path="{{apiPath}}" user-account-id="{{userAccountId}}" token="{{token}}">
-                        </ft-test-account-manager>
-                    </div>
                 </iron-pages>
 
             </div>
