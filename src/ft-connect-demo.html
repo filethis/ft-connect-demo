@@ -163,7 +163,10 @@ This is a fully-functional sample application that uses all of the components pr
                             <div style="height:100px; "></div>
 
                             <!-- ft-connect-expand-out -->
-                            <template is="dom-if" if="[[_flavorExpandOut]]" restamp="true">
+                            <template
+                                    is="dom-if"
+                                    if="[[_flavorExpandOut]]"
+                                    restamp="true">
                                 <ft-connect-expand-out
                                         live="[[live]]"
                                         server="[[server]]"
@@ -174,11 +177,61 @@ This is a fully-functional sample application that uses all of the components pr
                                         route="{{route}}"
                                         debug="true"
                                         on-ft-connect-error="_handleFileThisConnectErrorEvent">
+
+                                    <!-- Source Panel -->
+                                    <ft-source-panel
+                                            id="sourcesPanel"
+                                            style="width:400px; border:1px solid #DDD; "
+                                            slot="sources"
+                                            sources="[[sources]]"
+                                            selected-filter-id="{{selectedFilterId}}">
+                                    </ft-source-panel>
+
+                                    <!-- Spacer -->
+                                    <div
+                                            style="width:40px; "
+                                            hidden="[[_hideConnectionsPanel]]">
+                                    </div>
+
+                                    <!-- Connection Panel -->
+                                    <ft-connection-panel
+                                            id="connectionsPanel"
+                                            slot="connections"
+                                            style="width:433px; border:1px solid #DDD; "
+                                            hidden="[[_hideConnectionsPanel]]"
+                                            connections="[[connections]]"
+                                            sources="[[sources]]">
+                                    </ft-connection-panel>
+
+                                    <!-- Spacer -->
+                                    <div
+                                            style="width:40px; "
+                                            hidden="[[_hideDocumentPanel]]">
+                                    </div>
+
+                                    <!-- Document Panel -->
+                                    <ft-document-panel
+                                            id="documentsPanel"
+                                            slot="documents"
+                                            style="border:1px solid #DDD; min-width:200px"
+                                            hidden="[[_hideDocumentPanel]]"
+                                            show-grid-button="false"
+                                            show-list-button="false"
+                                            show-preview-button="false"
+                                            show-upload-button="false"
+                                            show-download-button="false"
+                                            show-delete-button="false"
+                                            show-document-count="false"
+                                            documents="[[documents]]">
+                                    </ft-document-panel>
                                 </ft-connect-expand-out>
                             </template>
 
                             <!-- ft-connect-tabbed -->
-                            <template is="dom-if" if="[[_flavorTabbed]]" restamp="true">
+                            <template
+                                    is="dom-if"
+                                    if="[[_flavorTabbed]]"
+                                    restamp="true">
                                 <ft-connect-tabbed
                                         style="width:780px; height:450px; "
                                         live="[[live]]"
