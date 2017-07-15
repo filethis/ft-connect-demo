@@ -19,6 +19,7 @@ limitations under the License.
 <link rel="import" href="../bower_components/ft-connect-tabbed/ft-connect-tabbed.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
@@ -81,21 +82,21 @@ This is a fully-functional sample application that uses all of the components pr
                         FileThis Connect Component
                     </div>
 
-                    <!-- Flavors -->
-                    <paper-dropdown-menu label="Flavor" style="width:200px; padding-left:20px; ">
-                        <paper-listbox class="dropdown-content" slot="dropdown-content" selected="{{_selectedFlavorIndex}}">
-                            <template is="dom-repeat" items="[[flavors]]" as="flavor">
-                                <paper-item>[[flavor]]</paper-item>
+                    <!-- Variants -->
+                    <paper-dropdown-menu label="Variant" style="width:200px; padding-left:20px; ">
+                        <paper-listbox class="dropdown-content" slot="dropdown-content" selected="{{_selectedVariantIndex}}">
+                            <template is="dom-repeat" items="[[variants]]" as="variant">
+                                <paper-item>[[variant]]</paper-item>
                             </template>
                         </paper-listbox>
                     </paper-dropdown-menu>
 
-                    <!-- Documentation button -->
-                    <ft-labeled-icon-button style="padding-left:20px; " icon="info-outline" label="Docs" on-tap="_onDocumentationButtonTapped">
+                    <!-- API documentation button -->
+                    <ft-labeled-icon-button style="padding-left:20px; " icon="info-outline" label="API" on-tap="_onDocumentationButtonTapped">
                     </ft-labeled-icon-button>
 
                     <!-- GitHub repository button -->
-                    <ft-labeled-icon-button style="padding-left:8px; " icon="code" label="Code" on-tap="_onSourcesButtonTapped">
+                    <ft-labeled-icon-button style="padding-left:8px; " icon-src="./src/github.svg" label="Repo" on-tap="_onSourcesButtonTapped">
                     </ft-labeled-icon-button>
 
                     <!-- Spacer -->
@@ -118,13 +119,13 @@ This is a fully-functional sample application that uses all of the components pr
                             <div style="height:100px; "></div>
 
                             <!-- ft-connect-expand-out -->
-                            <template is="dom-if" if="[[_flavorExpandOut]]" restamp="true">
+                            <template is="dom-if" if="[[_variantExpandOut]]" restamp="true">
                                 <ft-connect-expand-out live="[[live]]" server="[[server]]" api-path="[[apiPath]]" user-account-id="[[userAccountId]]" token="[[token]]" interaction-version="[[interactionVersion]]" route="{{route}}" debug="true" on-ft-connect-error="_handleFileThisConnectErrorEvent">
                                 </ft-connect-expand-out>
                             </template>
 
                             <!-- ft-connect-tabbed -->
-                            <template is="dom-if" if="[[_flavorTabbed]]" restamp="true">
+                            <template is="dom-if" if="[[_variantTabbed]]" restamp="true">
                                 <ft-connect-tabbed style="width:780px; height:450px; " live="[[live]]" server="[[server]]" api-path="[[apiPath]]" user-account-id="[[userAccountId]]" token="[[token]]" interaction-version="[[interactionVersion]]" route="{{route}}" debug="true" on-ft-connect-error="_handleFileThisConnectErrorEvent">
                                 </ft-connect-tabbed>
                             </template>
@@ -163,15 +164,15 @@ This is a fully-functional sample application that uses all of the components pr
 
             properties:
             {
-                selectedFlavor:
+                selectedVariant:
                 {
                     type: String,
                     notify: true,
                     value: "ft-connect-expand-out",
-                    observer: "_onSelectedFlavorChanged"
+                    observer: "_onSelectedVariantChanged"
                 },
 
-                flavors:
+                variants:
                 {
                     type: Array,
                     notify: true,
@@ -181,12 +182,12 @@ This is a fully-functional sample application that uses all of the components pr
                     ]
                 },
 
-                _selectedFlavorIndex:
+                _selectedVariantIndex:
                 {
                     type: Number,
                     notify: true,
                     value: "1",
-                    observer: "_onSelectedFlavorIndexChanged"
+                    observer: "_onSelectedVariantIndexChanged"
                 },
 
                 /** Whether the FileThis Connect instance is live or not */
@@ -265,22 +266,22 @@ This is a fully-functional sample application that uses all of the components pr
                     value: true
                 },
 
-                _flavorExpandOut: {
+                _variantExpandOut: {
                     type: Boolean,
                     value: false
                 },
 
-                _flavorTabbed: {
+                _variantTabbed: {
                     type: Boolean,
                     value: false
                 },
 
-                _flavorWizard: {
+                _variantWizard: {
                     type: Boolean,
                     value: false
                 },
 
-                _flavorExpandIn: {
+                _variantExpandIn: {
                     type: Boolean,
                     value: false
                 }
@@ -314,13 +315,13 @@ This is a fully-functional sample application that uses all of the components pr
 
             _openConnectElementDocumentationPage: function(event)
             {
-                var url = "https://filethis.github.io/" + this.selectedFlavor;
+                var url = "https://filethis.github.io/" + this.selectedVariant;
                 this._openUrl(url);
             },
 
             _openConnectElementSourcesPage: function(event)
             {
-                var url = "https://github.com/filethis/" + this.selectedFlavor;
+                var url = "https://github.com/filethis/" + this.selectedVariant;
                 this._openUrl(url);
             },
 
@@ -393,38 +394,38 @@ This is a fully-functional sample application that uses all of the components pr
                 this.handleCaughtError(error);
             },
 
-            _onSelectedFlavorChanged: function(to, from)
+            _onSelectedVariantChanged: function(to, from)
             {
                 // Update the popup selection
-                this._selectedFlavorIndex = this._mapFlavorToIndex(this.selectedFlavor);
+                this._selectedVariantIndex = this._mapVariantToIndex(this.selectedVariant);
 
-                this._flavorExpandOut = false;
-                this._flavorTabbed = false;
-                this._flavorWizard = false;
-                this._flavorExpandIn = false;
+                this._variantExpandOut = false;
+                this._variantTabbed = false;
+                this._variantWizard = false;
+                this._variantExpandIn = false;
 
-                switch (this.selectedFlavor)
+                switch (this.selectedVariant)
                 {
                     case "ft-connect-expand-out":
-                        this._flavorExpandOut = true;
+                        this._variantExpandOut = true;
                         break;
                     case "ft-connect-tabbed":
-                        this._flavorTabbed = true;
+                        this._variantTabbed = true;
                         break;
                     case "ft-connect-wizard":
-                        this._flavorWizard = true;
+                        this._variantWizard = true;
                         break;
                     case "ft-connect-expand-in":
-                        this._flavorExpandIn = true;
+                        this._variantExpandIn = true;
                         break;
                     default:
-                        throw new Error("Unknown FileThis Connect flavor: " + flavor);
+                        throw new Error("Unknown FileThis Connect variant: " + variant);
                 }
             },
 
-            _mapFlavorToIndex: function(flavor)
+            _mapVariantToIndex: function(variant)
             {
-                switch (flavor)
+                switch (variant)
                 {
                     case "ft-connect-expand-out":
                         return 0;
@@ -435,28 +436,28 @@ This is a fully-functional sample application that uses all of the components pr
                     case "ft-connect-expand-in":
                         return 3;
                     default:
-                        throw new Error("Unknown FileThis Connect flavor: " + flavor);
+                        throw new Error("Unknown FileThis Connect variant: " + variant);
                 }
             },
 
-            _onSelectedFlavorIndexChanged: function()
+            _onSelectedVariantIndexChanged: function()
             {
-                switch (this._selectedFlavorIndex)
+                switch (this._selectedVariantIndex)
                 {
                     case 0:
-                        this.selectedFlavor = "ft-connect-expand-out";
+                        this.selectedVariant = "ft-connect-expand-out";
                         break;
                     case 1:
-                        this.selectedFlavor = "ft-connect-tabbed";
+                        this.selectedVariant = "ft-connect-tabbed";
                         break;
                     case 2:
-                        this.selectedFlavor = "ft-connect-wizard";
+                        this.selectedVariant = "ft-connect-wizard";
                         break;
                     case 3:
-                        this.selectedFlavor = "ft-connect-expand-in";
+                        this.selectedVariant = "ft-connect-expand-in";
                         break;
                     default:
-                        throw new Error("Invalid flavor index: " + this._selectedFlavorIndex.toString());
+                        throw new Error("Invalid variant index: " + this._selectedVariantIndex.toString());
                 }
             }
 
