@@ -74,7 +74,7 @@ limitations under the License.
                 <paper-tabs id="managerPanelTabs" attr-for-selected="name" selected="{{_selectedManagerPanelTabName}}" on-iron-select="_onPanelSelected" style="font-size:14pt; ">
                     <!--<paper-tab name="start">Start</paper-tab>-->
                     <paper-tab name="token">Token</paper-tab>
-                    <paper-tab name="config">Config</paper-tab>
+                    <!--<paper-tab name="config">Config</paper-tab>-->
                     <!--<paper-tab name="inspect">Inspect</paper-tab>-->
                     <!--<paper-tab name="styling">Styling</paper-tab>-->
                 </paper-tabs>
@@ -87,8 +87,9 @@ limitations under the License.
                     <!--</start-panel>-->
 
                     <!-- Config manager panel -->
-                    <config-panel name="config">
-                    </config-panel>
+                    <!--<config-panel-->
+                            <!--name="config">-->
+                    <!--</config-panel>-->
 
                     <!-- Test account manager panel -->
                     <div class="layout vertical center" name="token" style="width:100%; height:100%; ">
@@ -216,11 +217,11 @@ limitations under the License.
             {
                 this.async(function()
                 {
-                    this.managerIsExpanded = this._readFromLocalStorageBoolean("managerIsExpanded", true);
+                    this.managerIsExpanded = this._readFromLocalStorageBoolean(this.localName + "managerIsExpanded", true);
 
                     // We have to be careful here to make sure that removed panels whose names have been stored
                     // by a client get mapped to an actual panel.
-                    var panelName = this._readFromLocalStorage("selectedManagerPanelTabName", this._defaultPanelName);
+                    var panelName = this._readFromLocalStorage(this.localName + "selectedManagerPanelTabName", this._defaultPanelName);
                     if (!this._isValidPanelName(panelName))
                         panelName = this._defaultPanelName;
 
@@ -242,12 +243,12 @@ limitations under the License.
             _onExpandCollapseButtonClicked: function()
             {
                 this.managerIsExpanded = !this.managerIsExpanded;
-                localStorage.setItem("managerIsExpanded", JSON.stringify(this.managerIsExpanded));
+                localStorage.setItem(this.localName + "managerIsExpanded", JSON.stringify(this.managerIsExpanded));
             },
 
             _onPanelSelected: function()
             {
-                localStorage.setItem("selectedManagerPanelTabName", this._selectedManagerPanelTabName);
+                localStorage.setItem(this.localName + "selectedManagerPanelTabName", this._selectedManagerPanelTabName);
             },
 
             _isValidPanelName: function(panelName)
