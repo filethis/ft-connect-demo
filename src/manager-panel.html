@@ -25,8 +25,9 @@ limitations under the License.
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="config-panel.html">
+<link rel="import" href="style-panel.html">
 <link rel="import" href="inspect-panel.html">
-<link rel="import" href="start-panel.html">
+<!--<link rel="import" href="start-panel.html">-->
 
 
 <dom-module id="manager-panel">
@@ -95,9 +96,9 @@ limitations under the License.
                         style="font-size:14pt; ">
                     <!--<paper-tab name="start">Start</paper-tab>-->
                     <paper-tab name="token">Token</paper-tab>
+                    <!--<paper-tab name="style">Style</paper-tab>-->
                     <!--<paper-tab name="config">Config</paper-tab>-->
                     <!--<paper-tab name="inspect">Inspect</paper-tab>-->
-                    <!--<paper-tab name="styling">Styling</paper-tab>-->
                 </paper-tabs>
 
                 <!-- Manager panels -->
@@ -127,16 +128,17 @@ limitations under the License.
                                 live="{{live}}"
                                 can-go-live="{{canGoLive}}"
                                 server="{{server}}"
-                                show-server="false"
+                                show-server="true"
                                 api-path="{{apiPath}}"
                                 user-account-id="{{userAccountId}}"
                                 token="{{token}}">
                         </ft-test-account-manager>
                     </div>
-                    <!-- Styling manager panel -->
-                    <!--<div name="styling">-->
-                        <!--Styling-->
-                    <!--</div>-->
+
+                    <!-- Style panel -->
+                    <!--<style-panel-->
+                            <!--name="style">-->
+                    <!--</style-panel>-->
 
                     <!-- Inspect manager panel -->
                     <!--<inspect-panel-->
