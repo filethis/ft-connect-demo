@@ -7,6 +7,7 @@
     "ft-confirmation-dialog": "filethis/ft-confirmation-dialog#^0.0.13",
     "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.18",
     "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.12",
+    "ft-connect-wizard": "filethis/ft-connect-wizard#^0.0.3",
     "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.13",
     "ft-labeled-icon-button": "filethis/ft-labeled-icon-button#^0.0.10",
     "iron-a11y-keys": "PolymerElements/iron-a11y-keys#1 - 2",
