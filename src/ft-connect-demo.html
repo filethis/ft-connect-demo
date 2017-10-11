@@ -21,6 +21,7 @@ limitations under the License.
 <link rel="import" href="../bower_components/ft-connect-expand-out/ft-connect-expand-out.html">
 <link rel="import" href="../bower_components/ft-connect-tabbed/ft-connect-tabbed.html">
 <link rel="import" href="../bower_components/ft-connect-wizard/ft-connect-wizard.html">
+<link rel="import" href="../bower_components/ft-element-demo/ft-element-demo.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
@@ -111,7 +112,7 @@ This is a fully-functional sample application that uses all of the components pr
                     <ft-labeled-icon-button
                             style="padding-left:20px; "
                             icon="info-outline"
-                            label="API"
+                            label="Docs"
                             on-tap="_onDocumentationButtonTapped">
                     </ft-labeled-icon-button>
 
@@ -151,25 +152,30 @@ This is a fully-functional sample application that uses all of the components pr
                             name="live"
                             style="width:100%; height:100%; ">
 
-                        <div style="height:100px; "></div>
-
                         <!-- ft-connect-tabbed -->
                         <template
                                 is="dom-if"
                                 if="[[_variantTabbed]]"
                                 restamp="true">
-                            <ft-connect-tabbed
-                                    style="width:780px; height:450px; border:1px solid black; "
-                                    live="[[live]]"
-                                    server="[[server]]"
-                                    api-path="[[apiPath]]"
-                                    user-account-id="[[userAccountId]]"
-                                    token="[[token]]"
-                                    interaction-version="[[interactionVersion]]"
-                                    route="{{route}}"
-                                    debug="true"
-                                    on-ft-connect-error="_handleFileThisConnectErrorEvent">
-                            </ft-connect-tabbed>
+                            <ft-element-demo
+                                    name="ft-connect-tabbed"
+                                    code="[[code]]"
+                                    style="width:100%; height:100%; ">
+                                <ft-connect-tabbed
+                                        slot="instance"
+                                        style="width:100%; height:100%; "
+                                        live="[[live]]"
+                                        server="[[server]]"
+                                        api-path="[[apiPath]]"
+                                        user-account-id="[[userAccountId]]"
+                                        token="[[token]]"
+                                        interaction-version="[[interactionVersion]]"
+                                        route="{{route}}"
+                                        debug="true"
+                                        on-ft-connect-error="_handleFileThisConnectErrorEvent"
+                                        code="{{code}}">
+                                </ft-connect-tabbed>
+                            </ft-element-demo>
                         </template>
 
                         <!-- ft-connect-wizard -->
@@ -177,18 +183,25 @@ This is a fully-functional sample application that uses all of the components pr
                                 is="dom-if"
                                 if="[[_variantWizard]]"
                                 restamp="true">
-                            <ft-connect-wizard
-                                    style="width:780px; height:450px; border:1px solid black; "
-                                    live="[[live]]"
-                                    server="[[server]]"
-                                    api-path="[[apiPath]]"
-                                    user-account-id="[[userAccountId]]"
-                                    token="[[token]]"
-                                    interaction-version="[[interactionVersion]]"
-                                    route="{{route}}"
-                                    debug="true"
-                                    on-ft-connect-error="_handleFileThisConnectErrorEvent">
-                            </ft-connect-wizard>
+                            <ft-element-demo
+                                    name="ft-connect-wizard"
+                                    code="[[code]]"
+                                    style="width:100%; height:100%; ">
+                                <ft-connect-wizard
+                                        slot="instance"
+                                        style="width:100%; height:100%; "
+                                        live="[[live]]"
+                                        server="[[server]]"
+                                        api-path="[[apiPath]]"
+                                        user-account-id="[[userAccountId]]"
+                                        token="[[token]]"
+                                        interaction-version="[[interactionVersion]]"
+                                        route="{{route}}"
+                                        debug="true"
+                                        on-ft-connect-error="_handleFileThisConnectErrorEvent"
+                                        code="{{code}}">
+                                </ft-connect-wizard>
+                            </ft-element-demo>
                         </template>
 
                         <!-- ft-connect-expand-out -->
@@ -196,6 +209,7 @@ This is a fully-functional sample application that uses all of the components pr
                                 is="dom-if"
                                 if="[[_variantExpandOut]]"
                                 restamp="true">
+                            <div style="height:100px; "></div>
                             <ft-connect-expand-out
                                     live="[[live]]"
                                     server="[[server]]"
@@ -387,6 +401,12 @@ This is a fully-functional sample application that uses all of the components pr
                 _variantExpandIn: {
                     type: Boolean,
                     value: false
+                },
+
+                code:
+                {
+                    type: String,
+                    value: ""
                 }
             },
 
@@ -397,7 +417,7 @@ This is a fully-functional sample application that uses all of the components pr
                 {
                     if (this.canGoLive)
                         this.live = true;
-                }, 500)
+                }, 500);
             },
 
             _onTap: function(event)
