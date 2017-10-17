@@ -1,0 +1,12 @@
+POST /api/v1/accounts HTTP/1.1
+Authorization: Basic czkyaHRwa3A5ajE5Y3NyaTlhN2hwYzhtcDprNm5kZzl2OWU4anQ3ZTRuNHRkOW9oMGV1ZQ==
+Content-Type: text/plain; charset=utf-8
+Host: filethis.com
+Connection: close
+User-Agent: Paw/3.1.5 (Macintosh; OS X/10.12.6) GCDHTTPRequest
+Content-Length: 64
+
+{
+  "partnerAccountId": "2055bbbf-b2c5-4276-bc3e-1886f501d1f8"
+}
+

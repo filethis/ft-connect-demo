@@ -48,6 +48,7 @@ This is a fully-functional sample application that uses all of the components pr
         <style>
             :host {
                 display:block;
+                @apply --layout-vertical;
 
                 --paper-button-raised-keyboard-focus: {
                     font-weight: normal;
@@ -65,9 +66,67 @@ This is a fully-functional sample application that uses all of the components pr
                 route="{{route}}">
         </app-location>
 
-        <!-- Top -->
-        <div class="layout horizontal"
-            style="width:100%; height:100%; background-color:#FAFAFA">
+        <!-- Header -->
+        <div
+                class="layout horizontal center"
+                style="height:60px; border-bottom:1px solid #DDD; ">
+
+            <!-- Title -->
+            <div
+                    style="font-family:Arial; font-size:16pt; padding-left:20px; ">
+                FileThisConnect Component Demo
+            </div>
+
+            <!-- Spacer -->
+            <div class="flex" style="min-width:30px; "></div>
+
+            <!-- Variants -->
+            <paper-dropdown-menu label="Variant" style="width:200px; padding-left:20px; ">
+                <paper-listbox
+                        class="dropdown-content"
+                        slot="dropdown-content"
+                        selected="{{_selectedVariantIndex}}">
+                    <template is="dom-repeat" items="[[variants]]" as="variant">
+                        <paper-item>[[variant]]</paper-item>
+                    </template>
+                </paper-listbox>
+            </paper-dropdown-menu>
+
+            <!-- API documentation button -->
+            <ft-labeled-icon-button
+                    style="padding-left:20px; "
+                    icon="info-outline"
+                    label="Docs"
+                    on-tap="_onDocumentationButtonTapped">
+            </ft-labeled-icon-button>
+
+            <!-- GitHub repository button -->
+            <ft-labeled-icon-button
+                    style="padding-left:8px; "
+                    icon-src="./src/github.svg"
+                    label="Repo"
+                    on-tap="_onSourcesButtonTapped">
+            </ft-labeled-icon-button>
+
+            <!-- Spacer -->
+            <div class="flex" style="min-width:30px; "></div>
+
+            <!-- Live button -->
+            <ft-labeled-icon-button
+                    id="liveButton"
+                    toggles="true"
+                    style="padding-left:30px; padding-right:16px; "
+                    disabled="[[!canGoLive]]"
+                    icon="power-settings-new"
+                    label="[[_calculateEnabledButtonLabel(live)]]"
+                    active="{{!live}}">
+            </ft-labeled-icon-button>
+
+        </div>
+
+        <!-- Main -->
+        <div class="flex layout horizontal"
+            style="background-color:#FAFAFA">
 
             <!-- Manager panel -->
             <manager-panel
@@ -84,61 +143,6 @@ This is a fully-functional sample application that uses all of the components pr
             <!-- FileThis Connect panel -->
             <div
                     class="flex layout vertical center">
-
-                <!-- Header -->
-                <div
-                        class="layout horizontal center"
-                        style="width:100%; height:55px; border-bottom:1px solid #DDD; ">
-
-                    <!-- Title -->
-                    <div
-                            style="font-family:Arial; font-size:16pt; padding-left:20px; ">
-                        FileThisConnect Component
-                    </div>
-
-                    <!-- Variants -->
-                    <paper-dropdown-menu label="Variant" style="width:200px; padding-left:20px; ">
-                        <paper-listbox
-                                class="dropdown-content"
-                                slot="dropdown-content"
-                                selected="{{_selectedVariantIndex}}">
-                            <template is="dom-repeat" items="[[variants]]" as="variant">
-                                <paper-item>[[variant]]</paper-item>
-                            </template>
-                        </paper-listbox>
-                    </paper-dropdown-menu>
-
-                    <!-- API documentation button -->
-                    <ft-labeled-icon-button
-                            style="padding-left:20px; "
-                            icon="info-outline"
-                            label="Docs"
-                            on-tap="_onDocumentationButtonTapped">
-                    </ft-labeled-icon-button>
-
-                    <!-- GitHub repository button -->
-                    <!--<ft-labeled-icon-button-->
-                            <!--style="padding-left:8px; "-->
-                            <!--icon-src="./src/github.svg"-->
-                            <!--label="Repo"-->
-                            <!--on-tap="_onSourcesButtonTapped">-->
-                    <!--</ft-labeled-icon-button>-->
-
-                    <!-- Spacer -->
-                    <div class="flex"></div>
-
-                    <!-- Live button -->
-                    <ft-labeled-icon-button
-                            id="liveButton"
-                            toggles="true"
-                            style="padding-left:30px; padding-right:16px; "
-                            disabled="[[!canGoLive]]"
-                            icon="power-settings-new"
-                            label="[[_calculateEnabledButtonLabel(live)]]"
-                            active="{{!live}}">
-                    </ft-labeled-icon-button>
-
-                </div>
 
                 <!-- Live or dead pages -->
                 <iron-pages id="liveOrDeadPages"
@@ -160,7 +164,8 @@ This is a fully-functional sample application that uses all of the components pr
                             <ft-element-demo
                                     name="ft-connect-tabbed"
                                     code="[[code]]"
-                                    show-config="false"
+                                    show-header="false"
+                                    show-config="true"
                                     style="width:100%; height:100%; ">
                                 <ft-connect-tabbed
                                         slot="instance"
@@ -187,6 +192,7 @@ This is a fully-functional sample application that uses all of the components pr
                             <ft-element-demo
                                     name="ft-connect-wizard"
                                     code="[[code]]"
+                                    show-header="false"
                                     show-config="false"
                                     style="width:100%; height:100%; ">
                                 <ft-connect-wizard
@@ -295,9 +301,9 @@ This is a fully-functional sample application that uses all of the components pr
                     type: Array,
                     notify: true,
                     value: [
-                        'ft-connect-tabbed',
-                        'ft-connect-wizard',
-                        'ft-connect-expand-out'
+                        '<ft-connect-tabbed>',
+                        '<ft-connect-wizard>',
+                        '<ft-connect-expand-out>'
                     ]
                 },
 

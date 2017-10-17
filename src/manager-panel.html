@@ -27,6 +27,7 @@ limitations under the License.
 <link rel="import" href="config-panel.html">
 <link rel="import" href="style-panel.html">
 <link rel="import" href="inspect-panel.html">
+<link rel="import" href="ft-accordion-segment.html">
 <!--<link rel="import" href="start-panel.html">-->
 
 
@@ -39,6 +40,8 @@ limitations under the License.
         <style>
             :host {
                 display:block;
+                overflow:hidden;
+                @apply --layout-vertical;
             }
         </style>
 
@@ -47,119 +50,36 @@ limitations under the License.
             {
                 --paper-tabs-selection-bar-color:blue;
             }
+            .verticalText
+            {
+                display:block;
+                -webkit-transform: rotate(-90deg);
+                -moz-transform: rotate(-90deg);
+                -ms-transform: rotate(-90deg);
+                -o-transform: rotate(-90deg);
+            }
         </style>
 
-        <iron-pages
-                id="expandedOrCollapsed"
-                style="width:100%; height:100%; "
-                attr-for-selected="name"
-                selected="[[_managerState]]">
+        <ft-accordion-segment
+            title="Fixture"
+            class="flex"
+        >
 
-            <!-- Expanded -->
-            <div
-                    class="layout vertical start"
-                    style="height:100%; "
-                    name="expanded">
+            <!-- Test account manager panel -->
+            <ft-test-account-manager
+                    id="testAccountManager"
+                    slot="content"
+                    name="token"
+                    live="{{live}}"
+                    can-go-live="{{canGoLive}}"
+                    server="{{server}}"
+                    show-server="true"
+                    api-path="{{apiPath}}"
+                    user-account-id="{{userAccountId}}"
+                    token="{{token}}">
+            </ft-test-account-manager>
 
-                <!-- Title and show/hide arrow button-->
-                <div
-                        class="layout horizontal center"
-                        style="width:100%; height:55px; border-bottom:1px solid #DDD; ">
-
-                    <!-- Title -->
-                    <div
-                            style="font-family:Arial; font-size:16pt; padding-left:20px; ">
-                        Configuration
-                    </div>
-
-                    <!-- Spacer -->
-                    <div class="flex"></div>
-
-                    <!-- Spacer -->
-                    <div style="width:15px;"></div>
-
-                    <!-- Expand/collapse button -->
-                    <paper-icon-button
-                            id="collapseButton"
-                            icon="arrow-back"
-                            on-tap="_onExpandCollapseButtonClicked">
-                    </paper-icon-button>
-
-                </div>
-
-                <!-- Manager panel Tabs -->
-                <!--<paper-tabs-->
-                        <!--id="managerPanelTabs"-->
-                        <!--attr-for-selected="name"-->
-                        <!--selected="{{_selectedManagerPanelTabName}}"-->
-                        <!--on-iron-select="_onPanelSelected"-->
-                        <!--style="font-size:14pt; ">-->
-                    <!--&lt;!&ndash;<paper-tab name="start">Start</paper-tab>&ndash;&gt;-->
-                    <!--<paper-tab name="token">Token</paper-tab>-->
-                    <!--&lt;!&ndash;<paper-tab name="style">Style</paper-tab>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<paper-tab name="config">Config</paper-tab>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<paper-tab name="inspect">Inspect</paper-tab>&ndash;&gt;-->
-                <!--</paper-tabs>-->
-
-                <!-- Manager panels -->
-                <iron-pages id="panels"
-                            attr-for-selected="name"
-                            class="flex"
-                            style="width:100%; border-top:1px solid #DDD; "
-                            selected="{{_selectedManagerPanelTabName}}">
-
-                    <!-- Start manager panel -->
-                    <!--<start-panel name="start">-->
-                    <!--</start-panel>-->
-
-                    <!-- Config manager panel -->
-                    <!--<config-panel-->
-                            <!--name="config">-->
-                    <!--</config-panel>-->
-
-                    <!-- Test account manager panel -->
-                    <ft-test-account-manager
-                            id="testAccountManager"
-                            name="token"
-                            style="width:100%; height:100%; "
-                            live="{{live}}"
-                            can-go-live="{{canGoLive}}"
-                            server="{{server}}"
-                            show-server="true"
-                            api-path="{{apiPath}}"
-                            user-account-id="{{userAccountId}}"
-                            token="{{token}}">
-                    </ft-test-account-manager>
-
-                    <!-- Style panel -->
-                    <!--<style-panel-->
-                            <!--name="style">-->
-                    <!--</style-panel>-->
-
-                    <!-- Inspect manager panel -->
-                    <!--<inspect-panel-->
-                            <!--name="inspect"-->
-                            <!--component-name="{{componentName}}">-->
-                    <!--</inspect-panel>-->
-
-                </iron-pages>
-
-            </div>
-
-            <!-- Collapsed -->
-            <div
-                    class="layout vertical center"
-                    name="collapsed">
-                
-                <!-- Expand button -->
-                <paper-icon-button
-                        id="expandButton"
-                        icon="arrow-forward"
-                        on-tap="_onExpandCollapseButtonClicked">
-                </paper-icon-button>
-            </div>
-
-        </iron-pages>
+        </ft-accordion-segment>
 
     </template>
 
@@ -216,21 +136,6 @@ limitations under the License.
                     value: ""
                 },
 
-                /** Whether the manager panel is expanded or not. */
-                managerIsExpanded:
-                {
-                    type: Boolean,
-                    notify: true,
-                    value: "false",
-                    observer: "_managerIsExpandedChanged"
-                },
-
-                _managerState:
-                {
-                    type: String,
-                    value: "expanded"
-                },
-
                 componentName:
                 {
                     type: String,
@@ -254,8 +159,6 @@ limitations under the License.
             {
                 this.async(function()
                 {
-                    this.managerIsExpanded = this._readFromLocalStorageBoolean(this.localName + "managerIsExpanded", true);
-
                     // We have to be careful here to make sure that removed panels whose names have been stored
                     // by a client get mapped to an actual panel.
                     var panelName = this._readFromLocalStorage(this.localName + "selectedManagerPanelTabName", this._defaultPanelName);
@@ -266,22 +169,7 @@ limitations under the License.
                 });
             },
 
-            _managerIsExpandedChanged: function()
-            {
-                if (this.managerIsExpanded)
-                    this._managerState = "expanded";
-                else
-                    this._managerState = "collapsed";
-            },
-
-
             // User action event handling --------------------------------------------------------------------------
-
-            _onExpandCollapseButtonClicked: function()
-            {
-                this.managerIsExpanded = !this.managerIsExpanded;
-                localStorage.setItem(this.localName + "managerIsExpanded", JSON.stringify(this.managerIsExpanded));
-            },
 
             _onPanelSelected: function()
             {
