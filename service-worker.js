@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["index.html","6398e9c1fbd25b527540b8d422d9582e"],["src/ft-connect-demo.html","a3f87eb16f7a034bd3a7421ad0434f62"]];
+var precacheConfig = [["index.html","6398e9c1fbd25b527540b8d422d9582e"],["src/ft-connect-demo.html","c031ead17ee3c15101a9639e1844491d"]];
 var cacheName = 'sw-precache-v3--' + (self.registration ? self.registration.scope : '');
 
 
