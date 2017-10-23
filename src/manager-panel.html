@@ -15,6 +15,7 @@ limitations under the License.
 -->
 
 
+<link rel="import" href="../bower_components/ft-accordion-item/ft-accordion-item.html">
 <link rel="import" href="../bower_components/ft-labeled-icon-button/ft-labeled-icon-button.html">
 <link rel="import" href="../bower_components/ft-test-account-manager/ft-test-account-manager.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -27,7 +28,6 @@ limitations under the License.
 <link rel="import" href="config-panel.html">
 <link rel="import" href="style-panel.html">
 <link rel="import" href="inspect-panel.html">
-<link rel="import" href="ft-accordion-segment.html">
 <!--<link rel="import" href="start-panel.html">-->
 
 
@@ -60,7 +60,7 @@ limitations under the License.
             }
         </style>
 
-        <ft-accordion-segment
+        <ft-accordion-item
             title="Fixture"
             class="flex"
         >
@@ -79,7 +79,7 @@ limitations under the License.
                     token="{{token}}">
             </ft-test-account-manager>
 
-        </ft-accordion-segment>
+        </ft-accordion-item>
 
     </template>
 

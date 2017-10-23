@@ -5,6 +5,7 @@
   "dependencies": {
     "app-route": "PolymerElements/app-route#1 - 2",
     "ft-confirmation-dialog": "filethis/ft-confirmation-dialog#^0.0.14",
+    "ft-accordion-item": "filethis/ft-accordion-item#^0.0.1",
     "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.19",
     "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.13",
     "ft-connect-wizard": "filethis/ft-connect-wizard#^0.0.4",
