@@ -157,6 +157,8 @@ limitations under the License.
 
             ready: function()
             {
+                this.$.testAccountManager.useLocalData = true;
+
                 this.async(function()
                 {
                     // We have to be careful here to make sure that removed panels whose names have been stored
