@@ -1,9 +1,10 @@
 {
-  "name": "ft-partner-application",
+  "name": "ft-connect-demo",
   "description": "A drop-in integration with FileThis partner services.",
   "main": "index.html",
   "dependencies": {
     "app-route": "PolymerElements/app-route#1 - 2",
+    "ft-clipboard-behavior": "filethis/ft-clipboard-behavior#^0.0.1",
     "ft-confirmation-dialog": "filethis/ft-confirmation-dialog#^0.0.15",
     "ft-accordion-item": "filethis/ft-accordion-item#^0.0.3",
     "ft-connect-expand-out": "filethis/ft-connect-expand-out#^0.0.20",

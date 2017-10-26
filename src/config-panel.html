@@ -37,8 +37,10 @@ limitations under the License.
         </style>
 
         <!-- Config panel -->
-        <div class="layout vertical"
-                    style="padding:12px; ">
+        <div
+            class="layout vertical"
+            style="padding:12px; "
+        >
 
             <ft-source-panel-config>
             </ft-source-panel-config>
@@ -51,7 +53,10 @@ limitations under the License.
 
             is: 'config-panel',
 
-            behaviors: [FileThis.ErrorBehavior, FileThis.HttpBehavior],
+            behaviors: [
+                FileThis.ErrorBehavior,
+                FileThis.HttpBehavior
+            ],
 
             properties: {}
         })
