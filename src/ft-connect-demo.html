@@ -78,14 +78,44 @@ This is a fully-functional sample application that uses all of the components pr
             <div
                 style="font-family:Arial; font-size:16pt; padding-left:20px; "
             >
-                FileThisConnect Front End SDK Demo
+                FileThisConnect Front End Development Tool
             </div>
 
-            <!-- Spacer -->
-            <div class="flex" style="min-width:30px; "></div>
+            <!-- Divider -->
+            <div
+                id="platformDivider"
+                style="width:25px; height:70%; border-left:1px solid #EEE; margin-left:25px; "
+            >
+            </div>
+
+            <!-- Platform menu -->
+            <paper-dropdown-menu
+                id="platformMenu"
+                label="Platform"
+                style="width:120px; "
+            >
+                <paper-listbox
+                    class="dropdown-content"
+                    slot="dropdown-content"
+                    selected="{{_selectedPlatformIndex}}"
+                >
+                    <template
+                        is="dom-repeat"
+                        items="[[platforms]]"
+                        as="platform"
+                    >
+                        <paper-item>[[platform]]</paper-item>
+                    </template>
+                </paper-listbox>
+            </paper-dropdown-menu>
+
+            <!-- Divider -->
+            <div style="width:25px; height:70%; border-left:1px solid #EEE; margin-left:25px; "
+            >
+            </div>
 
             <!-- Variants -->
-            <paper-dropdown-menu label="Variant" style="width:200px; padding-left:20px; ">
+            <paper-dropdown-menu label="Web Component Variant" style="width:200px; ">
                 <paper-listbox
                     class="dropdown-content"
                     slot="dropdown-content"
@@ -114,6 +144,11 @@ This is a fully-functional sample application that uses all of the components pr
                 on-tap="_onSourcesButtonTapped"
             >
             </ft-labeled-icon-button>
+
+            <!-- Divider -->
+            <div style="width:25px; height:70%; border-left:1px solid #EEE; margin-left:22px; "
+            >
+            </div>
 
             <!-- Spacer -->
             <div class="flex" style="min-width:30px; "></div>
@@ -308,7 +343,8 @@ This is a fully-functional sample application that uses all of the components pr
 
             behaviors: [
                 FileThis.ErrorBehavior,
-                FileThis.HttpBehavior
+                FileThis.HttpBehavior,
+                FileThis.UrlParamBehavior
             ],
 
             listeners:
@@ -318,6 +354,8 @@ This is a fully-functional sample application that uses all of the components pr
 
             properties:
             {
+                // Variant
+
                 selectedVariant:
                 {
                     type: String,
@@ -331,9 +369,9 @@ This is a fully-functional sample application that uses all of the components pr
                     type: Array,
                     notify: true,
                     value: [
-                        '<ft-connect-expand-out>',
-                        '<ft-connect-tabbed>',
                         '<ft-connect-wizard>',
+                        '<ft-connect-tabbed>',
+                        '<ft-connect-expand-out>',
                     ]
                 },
 
@@ -343,6 +381,36 @@ This is a fully-functional sample application that uses all of the components pr
                     notify: true,
                     value: "0",
                     observer: "_onSelectedVariantIndexChanged"
+                },
+
+
+                // Platform
+
+                selectedPlatform:
+                {
+                    type: String,
+                    notify: true,
+                    value: "desktop",
+                    observer: "_onSelectedPlatformChanged"
+                },
+
+                platforms:
+                {
+                    type: Array,
+                    notify: true,
+                    value: [
+                        'Desktop',
+                        'iOS',
+                        'Android',
+                    ]
+                },
+
+                _selectedPlatformIndex:
+                {
+                    type: Number,
+                    notify: true,
+                    value: "0",
+                    observer: "_onSelectedPlatformIndexChanged"
                 },
 
                 /** Whether the FileThis Connect instance is live or not */
@@ -455,6 +523,18 @@ This is a fully-functional sample application that uses all of the components pr
                 {
                     if (this.canGoLive)
                         this.live = true;
+
+                    if (this.getUrlParam("devel"))
+                    {
+                        this.$.platformMenu.style.display = "block";
+                        this.$.platformDivider.style.display = "block";
+                    }
+                    else
+                    {
+                        this.$.platformMenu.style.display = "none";
+                        this.$.platformDivider.style.display = "none";
+                    }
+
                 }, 500);
             },
 
@@ -555,26 +635,28 @@ This is a fully-functional sample application that uses all of the components pr
                 this.handleCaughtError(error);
             },
 
+
+            // Variant
+
             _onSelectedVariantChanged: function(to, from)
             {
                 // Update the popup selection
                 this._selectedVariantIndex = this._mapVariantToIndex(this.selectedVariant);
 
-                this._variantExpandOut = false;
-                this._variantTabbed = false;
                 this._variantWizard = false;
-                this._variantExpandIn = false;
+                this._variantTabbed = false;
+                this._variantExpandOut = false;
 
                 switch (this.selectedVariant)
                 {
-                    case "ft-connect-expand-out":
-                        this._variantExpandOut = true;
+                    case "ft-connect-wizard":
+                        this._variantWizard = true;
                         break;
                     case "ft-connect-tabbed":
                         this._variantTabbed = true;
                         break;
-                    case "ft-connect-wizard":
-                        this._variantWizard = true;
+                    case "ft-connect-expand-out":
+                        this._variantExpandOut = true;
                         break;
                     default:
                         throw new Error("Unknown FileThis Connect variant: " + variant);
@@ -585,11 +667,11 @@ This is a fully-functional sample application that uses all of the components pr
             {
                 switch (variant)
                 {
-                    case "ft-connect-expand-out":
+                    case "ft-connect-wizard":
                         return 0;
                     case "ft-connect-tabbed":
                         return 1;
-                    case "ft-connect-wizard":
+                    case "ft-connect-expand-out":
                         return 2;
                     default:
                         throw new Error("Unknown FileThis Connect variant: " + variant);
@@ -601,16 +683,77 @@ This is a fully-functional sample application that uses all of the components pr
                 switch (this._selectedVariantIndex)
                 {
                     case 0:
-                        this.selectedVariant = "ft-connect-expand-out";
+                        this.selectedVariant = "ft-connect-wizard";
                         break;
                     case 1:
                         this.selectedVariant = "ft-connect-tabbed";
                         break;
                     case 2:
-                        this.selectedVariant = "ft-connect-wizard";
+                        this.selectedVariant = "ft-connect-expand-out";
                         break;
                     default:
                         throw new Error("Invalid variant index: " + this._selectedVariantIndex.toString());
+                }
+            },
+
+
+            // Platform
+
+            _onSelectedPlatformChanged: function(to, from)
+            {
+                // Update the popup selection
+                this._selectedPlatformIndex = this._mapPlatformToIndex(this.selectedPlatform);
+
+//                this._platformDesktop = false;
+//                this._platformIos = false;
+//                this._platformAndroid = false;
+
+//                switch (this.selectedPlatform)
+//                {
+//                    case "desktop":
+//                        this._platformDesktop = true;
+//                        break;
+//                    case "ios":
+//                        this._platformIos = true;
+//                        break;
+//                    case "android":
+//                        this._platformAndroid = true;
+//                        break;
+//                    default:
+//                        throw new Error("Unknown FileThis Connect platform: " + platform);
+//                }
+            },
+
+            _mapPlatformToIndex: function(platform)
+            {
+                switch (platform)
+                {
+                    case "desktop":
+                        return 0;
+                    case "ios":
+                        return 1;
+                    case "android":
+                        return 2;
+                    default:
+                        throw new Error("Unknown FileThis Connect platform: " + platform);
+                }
+            },
+
+            _onSelectedPlatformIndexChanged: function()
+            {
+                switch (this._selectedPlatformIndex)
+                {
+                    case 0:
+                        this.selectedPlatform = "desktop";
+                        break;
+                    case 1:
+                        this.selectedPlatform = "ios";
+                        break;
+                    case 2:
+                        this.selectedPlatform = "android";
+                        break;
+                    default:
+                        throw new Error("Invalid platform index: " + this._selectedPlatformIndex.toString());
                 }
             }
 
