@@ -21,10 +21,16 @@ limitations under the License.
 <link rel="import" href="../bower_components/ft-connect-expand-out/ft-connect-expand-out.html">
 <link rel="import" href="../bower_components/ft-connect-tabbed/ft-connect-tabbed.html">
 <link rel="import" href="../bower_components/ft-connect-wizard/ft-connect-wizard.html">
+<link rel="import" href="../bower_components/ft-connection-panel/demo/ft-connection-panel-settings.html">
+<link rel="import" href="../bower_components/ft-connection-list-item/demo/ft-connection-list-item-settings.html">
+<link rel="import" href="../bower_components/ft-document-panel/demo/ft-document-panel-settings.html">
+<link rel="import" href="../bower_components/ft-element-demo/ft-config-panel.html">
 <link rel="import" href="../bower_components/ft-element-demo/ft-element-demo.html">
+<link rel="import" href="../bower_components/ft-source-panel/demo/ft-source-panel-settings.html">
+<link rel="import" href="../bower_components/ft-url-param-behavior/ft-url-param-behavior.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
@@ -222,9 +228,6 @@ This is a fully-functional sample application that uses all of the components pr
                                 account-id="[[userAccountId]]"
                                 token="[[token]]"
                             >
-                                <div slot="config">
-                                    hello
-                                </div>
                                 <ft-connect-tabbed
                                     slot="instance"
                                     style="width:100%; height:100%; "
@@ -253,11 +256,18 @@ This is a fully-functional sample application that uses all of the components pr
                                 name="ft-connect-wizard"
                                 code="[[code]]"
                                 show-header="false"
+                                show-config="true"
                                 style="width:100%; height:100%; "
                                 server="[[server]]"
                                 account-id="[[userAccountId]]"
                                 token="[[token]]"
                             >
+                                <ft-config-panel
+                                    slot="config"
+                                    configurations="[[configurations]]"
+                                >
+                                </ft-config-panel>
+
                                 <ft-connect-wizard
                                     slot="instance"
                                     style="width:100%; height:100%; "
@@ -519,7 +529,38 @@ This is a fully-functional sample application that uses all of the components pr
                 {
                     type: String,
                     value: ""
-                }
+                },
+
+                configurations:{
+                    type: Array,
+                    value: [
+                        {
+                            label: "<ft-connection-list-item>",
+                            name: "<ft-connection-list-item-settings>",
+                            settings: {},
+                            style: "",
+                        },
+                        {
+                            label: "<ft-connection-panel>",
+                            name: "<ft-connection-panel-settings>",
+                            settings: {},
+                            style: "",
+                        },
+                        {
+                            label: "<ft-document-panel>",
+                            name: "<ft-document-panel-settings>",
+                            settings: {},
+                            style: "",
+                        },
+                        {
+                            label: "<ft-source-panel>",
+                            name: "<ft-source-panel-settings>",
+                            settings: {},
+                            style: "",
+                        },
+                    ],
+                },
+
             },
 
             ready: function()

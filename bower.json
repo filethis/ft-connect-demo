@@ -13,6 +13,7 @@
     "ft-element-demo": "filethis/ft-element-demo#^0.0.9",
     "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.19",
     "ft-labeled-icon-button": "filethis/ft-labeled-icon-button#^0.0.15",
+    "ft-url-param-behavior": "filethis/ft-url-param-behavior#^0.0.4",
     "iron-a11y-keys": "PolymerElements/iron-a11y-keys#1 - 2",
     "iron-image": "PolymerElements/iron-image#1 - 2",
     "iron-label": "PolymerElements/iron-label#1 - 2",
