@@ -21,12 +21,13 @@ limitations under the License.
 <link rel="import" href="../bower_components/ft-connect-expand-out/ft-connect-expand-out.html">
 <link rel="import" href="../bower_components/ft-connect-tabbed/ft-connect-tabbed.html">
 <link rel="import" href="../bower_components/ft-connect-wizard/ft-connect-wizard.html">
-<link rel="import" href="../bower_components/ft-connection-panel/demo/ft-connection-panel-settings.html">
-<link rel="import" href="../bower_components/ft-connection-list-item/demo/ft-connection-list-item-settings.html">
-<link rel="import" href="../bower_components/ft-document-panel/demo/ft-document-panel-settings.html">
+<link rel="import" href="../bower_components/ft-connection-panel/demo/ft-connection-panel-settings-editor.html">
+<link rel="import" href="../bower_components/ft-connection-list-item/demo/ft-connection-list-item-settings-editor.html">
+<link rel="import" href="../bower_components/ft-document-panel/demo/ft-document-panel-settings-editor.html">
 <link rel="import" href="../bower_components/ft-element-demo/ft-config-panel.html">
 <link rel="import" href="../bower_components/ft-element-demo/ft-element-demo.html">
-<link rel="import" href="../bower_components/ft-source-panel/demo/ft-source-panel-settings.html">
+<link rel="import" href="../bower_components/ft-settings/ft-settings-initializer.html">
+<link rel="import" href="../bower_components/ft-source-panel/demo/ft-source-panel-settings-editor.html">
 <link rel="import" href="../bower_components/ft-url-param-behavior/ft-url-param-behavior.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
@@ -77,7 +78,7 @@ This is a fully-functional sample application that uses all of the components pr
         <!-- Header -->
         <div
             class="layout horizontal center"
-            style="height:60px; border-bottom:1px solid #DDD; "
+            style="height:60px; border-bottom:2px solid #DDD; "
         >
 
             <!-- Title -->
@@ -192,7 +193,7 @@ This is a fully-functional sample application that uses all of the components pr
                 user-account-id="{{userAccountId}}"
                 token="{{token}}"
                 component-name="{{componentName}}"
-                style="border-right:1px solid #DDD;"
+                style="border-right:2px solid #DDD;"
             >
             </manager-panel>
 
@@ -220,11 +221,9 @@ This is a fully-functional sample application that uses all of the components pr
                         >
                             <ft-element-demo
                                 name="ft-connect-tabbed"
-                                code="[[code]]"
                                 use-local-data="true"
                                 show-header="false"
                                 style="width:100%; height:100%; "
-                                server="[[server]]"
                                 account-id="[[userAccountId]]"
                                 token="[[token]]"
                             >
@@ -240,7 +239,6 @@ This is a fully-functional sample application that uses all of the components pr
                                     route="{{route}}"
                                     debug="true"
                                     on-ft-connect-error="_handleFileThisConnectErrorEvent"
-                                    code="{{code}}"
                                 >
                                 </ft-connect-tabbed>
                             </ft-element-demo>
@@ -254,11 +252,9 @@ This is a fully-functional sample application that uses all of the components pr
                         >
                             <ft-element-demo
                                 name="ft-connect-wizard"
-                                code="[[code]]"
                                 show-header="false"
                                 show-config="true"
                                 style="width:100%; height:100%; "
-                                server="[[server]]"
                                 account-id="[[userAccountId]]"
                                 token="[[token]]"
                             >
@@ -277,10 +273,8 @@ This is a fully-functional sample application that uses all of the components pr
                                     user-account-id="[[userAccountId]]"
                                     token="[[token]]"
                                     interaction-version="[[interactionVersion]]"
-                                    route="{{route}}"
                                     debug="true"
                                     on-ft-connect-error="_handleFileThisConnectErrorEvent"
-                                    code="{{code}}"
                                 >
                                 </ft-connect-wizard>
                             </ft-element-demo>
@@ -525,38 +519,28 @@ This is a fully-functional sample application that uses all of the components pr
                     value: false
                 },
 
-                code:
-                {
-                    type: String,
-                    value: ""
-                },
-
                 configurations:{
                     type: Array,
                     value: [
                         {
                             label: "<ft-connection-list-item>",
-                            name: "<ft-connection-list-item-settings>",
-                            settings: {},
-                            style: "",
+                            settingsEditorName: "ft-connection-list-item-settings-editor",
+                            settingsTargetName: "ft-connection-list-item",
                         },
                         {
                             label: "<ft-connection-panel>",
-                            name: "<ft-connection-panel-settings>",
-                            settings: {},
-                            style: "",
+                            settingsEditorName: "ft-connection-panel-settings-editor",
+                            settingsTargetName: "ft-connection-panel",
                         },
                         {
                             label: "<ft-document-panel>",
-                            name: "<ft-document-panel-settings>",
-                            settings: {},
-                            style: "",
+                            settingsEditorName: "ft-document-panel-settings-editor",
+                            settingsTargetName: "ft-document-panel",
                         },
                         {
                             label: "<ft-source-panel>",
-                            name: "<ft-source-panel-settings>",
-                            settings: {},
-                            style: "",
+                            settingsEditorName: "ft-source-panel-settings-editor",
+                            settingsTargetName: "ft-source-panel",
                         },
                     ],
                 },
