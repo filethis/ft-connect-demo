@@ -11,6 +11,7 @@
     "ft-connect-tabbed": "filethis/ft-connect-tabbed#^0.0.18",
     "ft-connect-wizard": "filethis/ft-connect-wizard#^0.0.9",
     "ft-element-demo": "filethis/ft-element-demo#^0.0.9",
+    "ft-forked-trofrigo-slash-global-variable": "filethis/global-variable#master",
     "ft-settings": "filethis/ft-settings#^0.0.1",
     "ft-test-account-manager": "filethis/ft-test-account-manager#^0.0.19",
     "ft-labeled-icon-button": "filethis/ft-labeled-icon-button#^0.0.15",
@@ -30,7 +31,6 @@
     "paper-toolbar": "PolymerElements/paper-toolbar#1 - 2",
     "paper-tooltip": "PolymerElements/paper-tooltip#1 - 2",
     "polymer": "Polymer/polymer#1.9 - 2",
-    "global-variable": "trofrigo/global-variable#v0.1.4",
     "validator-js": "^7.0.0"
   },
   "devDependencies": {
