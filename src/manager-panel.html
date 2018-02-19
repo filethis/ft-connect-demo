@@ -15,6 +15,7 @@ limitations under the License.
 -->
 
 
+<link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <link rel="import" href="../bower_components/ft-accordion-item/ft-accordion-item.html">
 <link rel="import" href="../bower_components/ft-labeled-icon-button/ft-labeled-icon-button.html">
 <link rel="import" href="../bower_components/ft-test-account-manager/ft-test-account-manager.html">
@@ -59,8 +60,12 @@ limitations under the License.
             }
         </style>
 
+        <app-localstorage-document key="managerIsOpen" data="{{_managerIsOpen}}">
+        </app-localstorage-document>
+
         <ft-accordion-item
             heading="Fixture"
+            is-open="{{_managerIsOpen}}"
             class="flex"
         >
 
@@ -146,7 +151,13 @@ limitations under the License.
                 {
                     type: String,
                     value: "token"
-                }
+                },
+
+                _managerIsOpen:
+                {
+                    type: Boolean,
+                    value: true,
+                },
             },
 
             _defaultPanelName: "token",  // Make sure this panel really exists
