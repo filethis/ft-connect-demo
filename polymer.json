@@ -5,7 +5,6 @@
     ],
     "sources": [
         "src/**/*",
-        "data/**/*",
         "bower.json"
     ],
     "extraDependencies": [
