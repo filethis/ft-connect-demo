@@ -24,13 +24,13 @@
       "bundle": true,
       "js": {
         "minify": true,
-        "compile": false
+        "compile": true
       },
       "css": {
         "minify": true
       },
       "html": {
-        "minify": true
+        "minify":                 false
       },
       "excludes": [
         "/data/"

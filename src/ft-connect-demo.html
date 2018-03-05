@@ -84,6 +84,15 @@ This is a fully-functional sample application that uses all of the components pr
                 FileThisConnect Front-End Development Tool
             </div>
 
+            <!-- Guide button -->
+            <ft-labeled-icon-button
+                style="padding-left:20px; "
+                icon="explore"
+                label="Guide"
+                on-tap="_onGuideButtonTapped"
+            >
+            </ft-labeled-icon-button>
+
             <!-- Divider -->
             <div
                 style="width:25px; height:70%; border-left:1px solid #EEE; margin-left:25px; "
@@ -583,6 +592,11 @@ This is a fully-functional sample application that uses all of the components pr
                 // this._inspect(componentName);
             },
 
+            _onGuideButtonTapped: function(event)
+            {
+                this._openGuidePage();
+            },
+
             _onDocumentationButtonTapped: function(event)
             {
                 this._openConnectElementDocumentationPage();
@@ -591,6 +605,12 @@ This is a fully-functional sample application that uses all of the components pr
             _onSourcesButtonTapped: function(event)
             {
                 this._openConnectElementSourcesPage();
+            },
+
+            _openGuidePage: function(event)
+            {
+                var url = "https://filethis.com/developer/front-end/ft-development-tool/";
+                this._openUrl(url);
             },
 
             _openConnectElementDocumentationPage: function(event)
