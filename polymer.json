@@ -20,6 +20,9 @@
   },
   "builds": [
     {
+      "preset": "es6-bundled"
+    },
+    {
       "name": "app",
       "bundle": true,
       "js": {
